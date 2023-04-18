@@ -6,12 +6,12 @@ import { Avatar, Label } from 'flowbite-react';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="h-screen">
+    <div className="h-screen w-screen">
       <Head>
         <title>Bob Works</title>
       </Head>
-      <div className="grid grid-flow-row grid-rows-1 grid-cols-3 h-full p-10">
-        <div className="col-span-1">
+      <div className="flex h-full p-10 w-full">
+        <div className="flex-initial w-64 min-w-min md:min-w-0">
           <div className="grid grid-cols-1">
             {/* Avatar */}
             <div className="grid justify-start">
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </div>
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="flex-initial w-full">
           <Component {...pageProps} />
         </div>
       </div>
