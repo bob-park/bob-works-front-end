@@ -28,8 +28,10 @@ export default function App({ Component, pageProps }: AppProps) {
             </div>
           </div>
 
-          <div className="flex-initial w-full p-20">
-            <Component {...pageProps} />
+          <div className="grid w-full p-20 justify-center">
+            <div className="min-w-[1000px] justify-center">
+              <Component {...pageProps} />
+            </div>
           </div>
         </div>
 
