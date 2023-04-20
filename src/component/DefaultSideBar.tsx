@@ -1,7 +1,6 @@
-import { useLayoutEffect, useState } from 'react';
 import { HiChartPie, HiDocument } from 'react-icons/hi';
 import { IoIosLogOut } from 'react-icons/io';
-import { Avatar, Label, Sidebar, Button } from 'flowbite-react';
+import { Avatar, Sidebar } from 'flowbite-react';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
