@@ -7,6 +7,12 @@ import { Footer } from 'flowbite-react';
 
 const { Copyright, LinkGroup, Link } = Footer;
 
+const dummyUser = {
+  username: 'Bob Park',
+  department: '디지털 미디어부',
+  position: '대리',
+};
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -18,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* TODO 나중에 이거 꼭 반응형으로 바꾸잣 */}
           <div className="flex-initial min-w-[300px] border-r-2 border-solid">
             <div className="h-full">
-              <DefaultSideBar />
+              <DefaultSideBar user={dummyUser} />
             </div>
           </div>
 

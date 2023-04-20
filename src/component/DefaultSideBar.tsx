@@ -3,9 +3,16 @@ import { HiChartPie, HiDocument } from 'react-icons/hi';
 import { IoIosLogOut } from 'react-icons/io';
 import { Avatar, Label, Sidebar, Button } from 'flowbite-react';
 
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-export default function DefaultSideBar() {
+export type DefaultSideBarProps = {
+  user: User;
+};
+
+export default function DefaultSideBar({ user }: DefaultSideBarProps) {
+  const router = useRouter();
+
   return (
     <>
       <div className="h-full">
@@ -14,16 +21,16 @@ export default function DefaultSideBar() {
           <div className="mt-4">
             <Avatar rounded size="lg" placeholderInitials="BP" />
           </div>
-          <div className="mt-4 font-bold text-lg">Bob park</div>
-          <div className="mt-2 font-bold text-base text-gray">
+          <div className="mt-4 font-bold text-lg">{user.username}</div>
+          <div className="mt-2 font-bold text-base text-gray-500">
             <span>
               {/* 부서 */}
-              디지털 미디어부
+              {user.department}
             </span>
             {' - '}
             <span>
               {/* 직급 */}
-              대리
+              {user.position}
             </span>
           </div>
         </div>
@@ -34,8 +41,8 @@ export default function DefaultSideBar() {
               <Sidebar.ItemGroup>
                 <Sidebar.Item
                   icon={HiChartPie}
-                  active={location.pathname == '/'}
                   as="div"
+                  active={router.pathname == '/'}
                 >
                   <Link href="/" className="w-full">
                     대시보드
@@ -46,13 +53,13 @@ export default function DefaultSideBar() {
                 <Sidebar.Collapse icon={HiDocument} label="결제 문서" open>
                   <Sidebar.Item
                     as="p"
-                    active={location.pathname == '/document/search'}
+                    active={router.pathname == '/document/search'}
                   >
                     <Link href="/document/search">결제 문서 목록</Link>
                   </Sidebar.Item>
                   <Sidebar.Item
                     as="p"
-                    active={location.pathname == '/document/vacation/request'}
+                    active={router.pathname == '/document/vacation/request'}
                   >
                     <Link href="/document/vacation/request">휴가계 신청</Link>
                   </Sidebar.Item>
