@@ -43,7 +43,7 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                   as="div"
                   active={router.pathname == '/'}
                 >
-                  <Link href="/" className="w-full">
+                  <Link className="block w-full" href="/">
                     대시보드
                   </Link>
                 </Sidebar.Item>
@@ -54,13 +54,20 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                     as="p"
                     active={router.pathname == '/document/search'}
                   >
-                    <Link href="/document/search">결제 문서 목록</Link>
+                    <Link className="block w-full" href="/document/search">
+                      결제 문서 목록
+                    </Link>
                   </Sidebar.Item>
                   <Sidebar.Item
                     as="p"
                     active={router.pathname == '/document/vacation/request'}
                   >
-                    <Link href="/document/vacation/request">휴가 신청</Link>
+                    <Link
+                      className="block w-full"
+                      href="/document/vacation/request"
+                    >
+                      휴가 신청
+                    </Link>
                   </Sidebar.Item>
                 </Sidebar.Collapse>
               </Sidebar.ItemGroup>
@@ -74,9 +81,7 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
             <Sidebar aria-label="Sidebar with content separator example">
               <Sidebar.Items>
                 <Sidebar.ItemGroup>
-                  <Sidebar.Item href="#" icon={IoIosLogOut}>
-                    로그아웃
-                  </Sidebar.Item>
+                  <Sidebar.Item icon={IoIosLogOut}>로그아웃</Sidebar.Item>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </Sidebar>
