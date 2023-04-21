@@ -216,11 +216,11 @@ export default function Search() {
                 color="light"
                 onClick={resetConditionHandler}
               >
-                <MdOutlineRefresh className="mr-2 h5 w-5" />
+                <MdOutlineRefresh className="mr-2 h-5 w-5" />
                 초기화
               </Button>
               <Button>
-                <MdSearch className="mr-2 h5 w-5" />
+                <MdSearch className="mr-2 h-5 w-5" />
                 조회
               </Button>
             </div>

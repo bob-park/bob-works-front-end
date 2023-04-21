@@ -60,7 +60,7 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                     as="p"
                     active={router.pathname == '/document/vacation/request'}
                   >
-                    <Link href="/document/vacation/request">휴가계 신청</Link>
+                    <Link href="/document/vacation/request">휴가 신청</Link>
                   </Sidebar.Item>
                 </Sidebar.Collapse>
               </Sidebar.ItemGroup>
