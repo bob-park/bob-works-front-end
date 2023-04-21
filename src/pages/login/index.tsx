@@ -6,7 +6,7 @@ const client = axios.create({
 
 export default function Login() {
   const loginHandle = () => {
-    location.href = 'http://127.0.0.1:8083/login';
+    location.href = '/api/oauth2/authorization/bob-works';
   };
 
   return (

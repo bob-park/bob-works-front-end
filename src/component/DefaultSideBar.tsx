@@ -20,16 +20,16 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
           <div className="mt-4">
             <Avatar rounded size="lg" placeholderInitials="BP" />
           </div>
-          <div className="mt-4 font-bold text-lg">{user.username}</div>
+          <div className="mt-4 font-bold text-lg">{user.name}</div>
           <div className="mt-2 font-bold text-base text-gray-500">
             <span>
               {/* 부서 */}
-              {user.department}
+              {'dummy'}
             </span>
             {' - '}
             <span>
               {/* 직급 */}
-              {user.position}
+              {user.position.name}
             </span>
           </div>
         </div>
