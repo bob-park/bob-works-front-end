@@ -13,7 +13,7 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    결제 대기 중
+                    대기 중
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
@@ -25,19 +25,7 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    결제 진행 중
-                  </p>
-                </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  5
-                </div>
-              </div>
-            </li>
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    결제 완료
+                    승인
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
@@ -49,7 +37,7 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    결제 반려
+                    반려
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
