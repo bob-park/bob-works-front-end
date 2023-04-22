@@ -1,5 +1,5 @@
 type Vacation = {
-  total: number;
+  totalCount: number;
   usedCount: number;
 };
 

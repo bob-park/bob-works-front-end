@@ -49,13 +49,13 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
-                <Sidebar.Collapse icon={HiDocument} label="결제 문서" open>
+                <Sidebar.Collapse icon={HiDocument} label="결제" open>
                   <Sidebar.Item
                     as="p"
                     active={router.pathname == '/document/search'}
                   >
                     <Link className="block w-full" href="/document/search">
-                      결제 문서 목록
+                      문서 목록
                     </Link>
                   </Sidebar.Item>
                   <Sidebar.Item

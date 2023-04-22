@@ -1,6 +1,16 @@
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { Card } from 'flowbite-react';
 
 export default function Home() {
+  const { user } = useAppSelector((state) => state.authentication);
+  const dispatch = useAppDispatch();
+
+  const general = user?.nowVacation?.general || { totalCount: 0, usedCount: 0 };
+  const alternative = user?.nowVacation?.alternative || {
+    totalCount: 0,
+    usedCount: 0,
+  };
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <Card>
@@ -58,11 +68,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    총 연차 수
+                    총 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  15
+                  {general.totalCount}
                 </div>
               </div>
             </li>
@@ -70,11 +80,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    사용한 연차 수
+                    사용한 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  5
+                  {general.usedCount}
                 </div>
               </div>
             </li>
@@ -82,11 +92,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    남은 연차 수
+                    남은 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  10
+                  {general.totalCount - general.usedCount}
                 </div>
               </div>
             </li>
@@ -103,11 +113,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    총 대체휴가 수
+                    총 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  2.5
+                  {alternative.totalCount}
                 </div>
               </div>
             </li>
@@ -115,11 +125,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    사용한 대체휴가 수
+                    사용한 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  1
+                  {alternative.usedCount}
                 </div>
               </div>
             </li>
@@ -127,11 +137,11 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    남은 대체휴가 수
+                    남은 수
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  1.5
+                  {alternative.totalCount - alternative.usedCount}
                 </div>
               </div>
             </li>
