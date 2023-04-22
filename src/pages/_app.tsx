@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import type { AppProps } from 'next/app';
@@ -11,8 +11,9 @@ import { Footer } from 'flowbite-react';
 
 import { wrapper } from '@/store/store';
 import { authenticationActions } from '@/store/authentication';
-import DefaultSideBar from '@/component/DefaultSideBar';
+import DefaultSideBar from '@/components/DefaultSideBar';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
+import LoginLoading from '@/components/loading/LoginLoading';
 
 const { Copyright, LinkGroup, Link } = Footer;
 
@@ -24,7 +25,7 @@ function App({ Component, pageProps }: AppProps) {
   const { user } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(
       requestGetUser({
         exceptionHandle: () =>
@@ -34,7 +35,7 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
 
   if (!user) {
-    return null;
+    return <LoginLoading />;
   }
 
   return (
