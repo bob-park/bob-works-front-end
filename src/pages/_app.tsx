@@ -1,35 +1,36 @@
-import { useEffect, useState } from 'react';
-import DefaultSideBar from '@/component/DefaultSideBar';
 import '@/styles/globals.css';
+
+import { useEffect, useLayoutEffect, useState } from 'react';
+
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { Footer } from 'flowbite-react';
 
-import axios from 'axios';
-
-const client = axios.create({
-  withCredentials: true,
-});
+import { wrapper } from '@/store/store';
+import { authenticationActions } from '@/store/authentication';
+import DefaultSideBar from '@/component/DefaultSideBar';
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 const { Copyright, LinkGroup, Link } = Footer;
 
-export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<User>();
+const { requestGetUser } = authenticationActions;
 
-  useEffect(() => {
-    client
-      .get('/api/user')
-      .then((res) => {
-        setIsLoggedIn(true);
-        setUser({
-          ...res.data,
-        });
-      })
-      .catch((err) => router.push('/api/oauth2/authorization/bob-works'));
+function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
+  const { user } = useAppSelector((state) => state.authentication);
+  const dispatch = useAppDispatch();
+
+  useLayoutEffect(() => {
+    dispatch(
+      requestGetUser({
+        exceptionHandle: () =>
+          router.push('/api/oauth2/authorization/bob-works'),
+      }),
+    );
   }, []);
 
   if (!user) {
@@ -76,3 +77,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default wrapper.withRedux(App);
