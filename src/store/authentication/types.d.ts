@@ -13,11 +13,16 @@ type User = {
   userId: string;
   email: string;
   name: string;
-  position: Position;
-  nowVacation: {
+  position?: Position;
+  nowVacation?: {
     id: number;
     year: number;
     general: Vacation;
     alternative: Vacation;
   };
+};
+
+type Authentication = {
+  user?: User;
+  isLoggedIn: boolean;
 };

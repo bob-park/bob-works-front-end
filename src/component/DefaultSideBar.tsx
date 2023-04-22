@@ -29,7 +29,7 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
             {' - '}
             <span>
               {/* 직급 */}
-              {user.position.name}
+              {user.position?.name}
             </span>
           </div>
         </div>
