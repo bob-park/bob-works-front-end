@@ -2,7 +2,6 @@ import '@/styles/globals.css';
 
 import { useEffect } from 'react';
 
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

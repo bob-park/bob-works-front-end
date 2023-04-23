@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,6 +6,12 @@ import { Button, Card, Label, TextInput } from 'flowbite-react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import { GiCancel } from 'react-icons/gi';
 import { RiFileTransferLine } from 'react-icons/ri';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
+
+import { documentTypeActions } from '@/store/document/type';
+
+const { requestGetTypes } = documentTypeActions;
 
 type VacationSelect = {
   id: string;
@@ -17,7 +23,7 @@ type VacationDate = {
   endDate: Date | null;
 };
 
-const types: VacationSelect[] = [
+const vacationTypes: VacationSelect[] = [
   {
     id: 'GENERAL',
     name: '연차',
@@ -28,7 +34,7 @@ const types: VacationSelect[] = [
   },
 ];
 
-const subTypes: VacationSelect[] = [
+const vacationSubTypes: VacationSelect[] = [
   {
     id: 'ALL',
     name: '종일',
@@ -46,10 +52,19 @@ const subTypes: VacationSelect[] = [
 export default function VacationDocumentRequest() {
   const router = useRouter();
 
+  const { isLoading, types } = useAppSelector((state) => state.documentsType);
+  const dispatch = useAppDispatch();
+
+  const documentType = types.find((type) => type.type === 'VACATION');
+
   const [dateValue, setDateValue] = useState<VacationDate>({
     startDate: null,
     endDate: null,
   });
+
+  useEffect(() => {
+    dispatch(requestGetTypes());
+  }, []);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,9 +85,9 @@ export default function VacationDocumentRequest() {
               id="vacationType"
               className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              {types.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
+              {vacationTypes.map((vacationType) => (
+                <option key={vacationType.id} value={vacationType.id}>
+                  {vacationType.name}
                 </option>
               ))}
             </select>
@@ -85,9 +100,9 @@ export default function VacationDocumentRequest() {
               id="vacationSubType"
               className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              {subTypes.map((subType) => (
-                <option key={subType.id} value={subType.id}>
-                  {subType.name}
+              {vacationSubTypes.map((vacationSubType) => (
+                <option key={vacationSubType.id} value={vacationSubType.id}>
+                  {vacationSubType.name}
                 </option>
               ))}
             </select>
