@@ -9,9 +9,11 @@ import { createWrapper } from 'next-redux-wrapper';
 import rootSaga from './saga';
 
 import { AUTHENTICATION, authenticationReducer } from './authentication';
+import { DOCUMENT_TYPE, documentTypeReducer } from './document/type';
 
 const rootReducer = combineReducers({
   [AUTHENTICATION]: authenticationReducer,
+  [DOCUMENT_TYPE]: documentTypeReducer,
 });
 
 function rootStore() {

@@ -1,8 +1,6 @@
-// saga
-
 import { call, all, takeLatest, fork, put, delay } from 'redux-saga/effects';
 
-import { client, get } from '@/utils/common';
+import { get } from '@/utils/common';
 import { authenticationActions } from '.';
 
 const { requestGetUser, successGetUser } = authenticationActions;
@@ -14,7 +12,7 @@ function* callGetUser(action: ReturnType<typeof requestGetUser>) {
     action.payload.exceptionHandle,
   );
 
-  yield delay(2_000);
+  // yield delay(2_000);
 
   yield put(successGetUser(user));
 }
