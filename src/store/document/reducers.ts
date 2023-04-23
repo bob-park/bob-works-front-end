@@ -17,7 +17,10 @@ const reducers = {
   },
   requestAddVacation: (
     state: DocumentsState,
-    action: PayloadAction<AddVacationRequest>,
+    action: PayloadAction<{
+      requestBody: AddVacationRequest;
+      handleAfter?: () => void;
+    }>,
   ) => {
     state.isLoading = false;
   },

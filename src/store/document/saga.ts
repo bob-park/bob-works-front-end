@@ -31,13 +31,17 @@ function* watchGetDocuments() {
 
 /* add vacation documents */
 function* callAddVacation(action: ReturnType<typeof requestAddVacation>) {
+  const { requestBody, handleAfter } = action.payload;
+
   const response: Documents = yield call(
     post,
     '/api/document/vacation',
-    action.payload,
+    requestBody,
   );
 
   yield put(scuccessAddVacation(response));
+
+  handleAfter && handleAfter();
 }
 
 function* watchAddVacation() {
