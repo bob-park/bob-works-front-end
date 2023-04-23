@@ -10,10 +10,12 @@ import rootSaga from './saga';
 
 import { AUTHENTICATION, authenticationReducer } from './authentication';
 import { DOCUMENT_TYPE, documentTypeReducer } from './document/type';
+import { DOCUMENT, documentReducer } from './document';
 
 const rootReducer = combineReducers({
   [AUTHENTICATION]: authenticationReducer,
   [DOCUMENT_TYPE]: documentTypeReducer,
+  [DOCUMENT]: documentReducer,
 });
 
 function rootStore() {

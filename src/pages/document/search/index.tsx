@@ -1,7 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
 import { Label, Card, Button, Table, Checkbox } from 'flowbite-react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
 import { format } from 'date-fns';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
+
+import { documentActions } from '@/store/document';
 
 type DocumentType = 'VACATION' | 'EXPENDITURE';
 type DocumentStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
@@ -18,6 +22,8 @@ type DocumentCondtionSelect = {
   id: string;
   name: string;
 };
+
+const { requestGetDocuments } = documentActions;
 
 const types: DocumentCondtionSelect[] = [
   {
@@ -126,7 +132,15 @@ const dummyDatas = [
 ];
 
 export default function Search() {
+  const dispatch = useAppDispatch();
+  const { documents } = useAppSelector((state) => state.document);
+  const {} = useAppSelector((state) => state.documentsType);
+
   const [condition, setCondition] = useState<SearchCondition>({});
+
+  useLayoutEffect(() => {
+    dispatch(requestGetDocuments());
+  }, []);
 
   const documentTypeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     let type: string | null = e.target.value;
