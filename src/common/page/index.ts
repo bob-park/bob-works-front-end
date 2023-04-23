@@ -1,23 +1,28 @@
+export type Direction = 'ASC' | 'DESC';
+export type PageOrder = {
+  direction: Direction;
+  property: string;
+};
+export type PageSort = {
+  orders: PageOrder[];
+};
+export type Pageable = {
+  page: number;
+  size: number;
+  sort?: PageSort;
+};
+
 export type Page<T> = {
   content: T[];
-  number: number;
-  size: number;
-  totalElements: number;
-  first: boolean;
-  last: boolean;
-  hasContent: boolean;
-  totalPage: number;
-  numberOfElements: number;
+  total: number;
+  pagable: Pageable;
 };
 
 export const defaultPage = {
   content: [],
-  number: 0,
-  size: 0,
-  totalElements: 0,
-  first: false,
-  last: false,
-  hasContent: false,
-  totalPage: 0,
-  numberOfElements: 0,
+  total: 0,
+  pagable: {
+    page: 0,
+    size: 10,
+  },
 };
