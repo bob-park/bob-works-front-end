@@ -15,3 +15,12 @@ export function get<T>(url: string, exceptionHandle: () => void) {
 
   return result;
 }
+
+export function post<B, R>(url: string, body: B) {
+  const result = client
+    .post(url, body)
+    .then((res: AxiosResponse<R>) => res.data)
+    .catch((err) => console.error(err));
+
+  return result;
+}
