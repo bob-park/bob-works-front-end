@@ -86,51 +86,6 @@ const headers = [
   },
 ];
 
-const dummyDatas = [
-  {
-    id: 1,
-    type: 'VACATION',
-    status: 'APPROVE',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-  {
-    id: 2,
-    type: 'VACATION',
-    status: 'WAITING',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-  {
-    id: 3,
-    type: 'VACATION',
-    status: 'PROCEEDING',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-  {
-    id: 4,
-    type: 'VACATION',
-    status: 'REJECT',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-  {
-    id: 5,
-    type: 'VACATION',
-    status: 'APPROVE',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-  {
-    id: 6,
-    type: 'VACATION',
-    status: 'APPROVE',
-    writer: 'Bob Park',
-    createdDate: new Date('2023-04-15T23:25:10.560815'),
-  },
-];
-
 export default function Search() {
   const dispatch = useAppDispatch();
   const { documents } = useAppSelector((state) => state.document);
@@ -253,7 +208,7 @@ export default function Search() {
             ))}
           </Table.Head>
           <Table.Body className="divide-y">
-            {dummyDatas.map((data) => (
+            {documents.content.map((data) => (
               <Table.Row key={data.id}>
                 <Table.Cell className="!p-4">
                   <Checkbox />
@@ -265,9 +220,11 @@ export default function Search() {
                 <Table.Cell>
                   {parseToDocumentStatus(data.status as DocumentStatus)?.name}
                 </Table.Cell>
-                <Table.Cell>{data.writer}</Table.Cell>
+                <Table.Cell>{data.writer.name}</Table.Cell>
                 <Table.Cell>
-                  {String(format(data.createdDate, 'yyyy-MM-dd hh:mm:ss'))}
+                  {String(
+                    format(new Date(data.createdDate), 'yyyy-MM-dd hh:mm:ss'),
+                  )}
                 </Table.Cell>
               </Table.Row>
             ))}

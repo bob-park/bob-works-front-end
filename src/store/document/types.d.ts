@@ -1,3 +1,5 @@
+import { Page } from '@/common/page';
+
 type DocumentsStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
 
 type Documents = {
@@ -5,9 +7,10 @@ type Documents = {
   type: DocumentsTypeName;
   writer: User;
   status: DocumentsStatus;
-  createdDate?: Date;
-  createdBy?: string;
+  createdDate: Date;
+  createdBy: string;
   lastModifiedDate?: Date;
+  lastModifyBy?: string;
 };
 
 type DocumentsState = {
