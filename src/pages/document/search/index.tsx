@@ -13,13 +13,12 @@ import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { documentActions } from '@/store/document';
-import PaginationButton from 'flowbite-react/lib/esm/components/Pagination/PaginationButton';
+import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSearchSelect';
 
-type DocumentType = 'VACATION' | 'EXPENDITURE';
 type DocumentStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
 
 type SearchCondition = {
-  type?: DocumentType;
+  type: DocumentsTypeName | 'ALL';
   writer?: string;
   status?: DocumentStatus;
   from?: Date;
@@ -32,21 +31,6 @@ type DocumentCondtionSelect = {
 };
 
 const { requestGetDocuments } = documentActions;
-
-const types: DocumentCondtionSelect[] = [
-  {
-    id: 'ALL',
-    name: '전체',
-  },
-  {
-    id: 'VACATION',
-    name: '휴가계',
-  },
-  {
-    id: 'EXPENDITURE',
-    name: '지출결의서',
-  },
-];
 
 const states: DocumentCondtionSelect[] = [
   {
@@ -106,10 +90,9 @@ export default function Search() {
     Math.floor(documents.total / documents.pageable.size) +
     (documents.total % documents.pageable.size > 0 ? 1 : 0);
 
-  console.log(`currentPage=${currentPage}`);
-  console.log(`totalPages=${totalPages}`);
-
-  const [condition, setCondition] = useState<SearchCondition>({});
+  const [condition, setCondition] = useState<SearchCondition>({
+    type: 'ALL',
+  });
 
   useLayoutEffect(() => {
     handlePageChange(1);
@@ -124,7 +107,7 @@ export default function Search() {
 
     setCondition({
       ...condition,
-      type: type as DocumentType,
+      type: type as DocumentsTypeName,
     });
   };
 
@@ -142,13 +125,9 @@ export default function Search() {
   };
 
   const resetConditionHandler = () => {
-    setCondition({});
-  };
-
-  const parseToDoucmentType = (
-    id: DocumentType,
-  ): DocumentCondtionSelect | undefined => {
-    return types.find((type) => type.id == id);
+    setCondition({
+      type: 'ALL',
+    });
   };
 
   const parseToDocumentStatus = (
@@ -171,23 +150,7 @@ export default function Search() {
       {/* search condition */}
       <Card>
         <form className="grid grid-cols-4 gap-5">
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="documentType" value="문서 종류" />
-            </div>
-            <select
-              id="documentType"
-              className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={condition.type || 'ALL'}
-              onChange={(e) => documentTypeHandler(e)}
-            >
-              {types.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <DocumentTypeSearchSelect type={condition.type} />
           <div>
             <div className="mb-2 block">
               <Label htmlFor="documentStatus" value="상태" />
@@ -246,9 +209,7 @@ export default function Search() {
                   <Checkbox />
                 </Table.Cell>
                 <Table.Cell>{data.id}</Table.Cell>
-                <Table.Cell>
-                  {parseToDoucmentType(data.type as DocumentType)?.name}
-                </Table.Cell>
+                <Table.Cell>{data.documentType.name}</Table.Cell>
                 <Table.Cell>
                   {parseToDocumentStatus(data.status as DocumentStatus)?.name}
                 </Table.Cell>

@@ -4,7 +4,7 @@ type DocumentsStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
 
 type Documents = {
   id: number;
-  type: DocumentsTypeName;
+  documentType: DocumentsType;
   writer: User;
   status: DocumentsStatus;
   createdDate: Date;
