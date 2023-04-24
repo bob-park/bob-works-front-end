@@ -60,6 +60,17 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                   </Sidebar.Item>
                   <Sidebar.Item
                     as="p"
+                    active={router.pathname == '/document/approve/list'}
+                  >
+                    <Link
+                      className="block w-full"
+                      href="/document/approve/list"
+                    >
+                      결제 승인 처리 목록
+                    </Link>
+                  </Sidebar.Item>
+                  <Sidebar.Item
+                    as="p"
                     active={router.pathname == '/document/vacation/request'}
                   >
                     <Link
