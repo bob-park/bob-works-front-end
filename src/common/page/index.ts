@@ -15,13 +15,13 @@ export type Pageable = {
 export type Page<T> = {
   content: T[];
   total: number;
-  pagable: Pageable;
+  pageable: Pageable;
 };
 
 export const defaultPage = {
   content: [],
   total: 0,
-  pagable: {
+  pageable: {
     page: 0,
     size: 10,
   },

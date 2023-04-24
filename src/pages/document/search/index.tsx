@@ -1,11 +1,19 @@
-import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
-import { Label, Card, Button, Table, Checkbox } from 'flowbite-react';
+import { ChangeEvent, useLayoutEffect, useState } from 'react';
+import {
+  Label,
+  Card,
+  Button,
+  Table,
+  Checkbox,
+  Pagination,
+} from 'flowbite-react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
 import { format } from 'date-fns';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { documentActions } from '@/store/document';
+import PaginationButton from 'flowbite-react/lib/esm/components/Pagination/PaginationButton';
 
 type DocumentType = 'VACATION' | 'EXPENDITURE';
 type DocumentStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
@@ -91,10 +99,20 @@ export default function Search() {
   const { documents } = useAppSelector((state) => state.document);
   const {} = useAppSelector((state) => state.documentsType);
 
+  const { content, pageable, total } = documents;
+
+  const currentPage = pageable.page + 1;
+  const totalPages =
+    Math.floor(documents.total / documents.pageable.size) +
+    (documents.total % documents.pageable.size > 0 ? 1 : 0);
+
+  console.log(`currentPage=${currentPage}`);
+  console.log(`totalPages=${totalPages}`);
+
   const [condition, setCondition] = useState<SearchCondition>({});
 
   useLayoutEffect(() => {
-    dispatch(requestGetDocuments());
+    handlePageChange(1);
   }, []);
 
   const documentTypeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -137,6 +155,15 @@ export default function Search() {
     id: DocumentStatus,
   ): DocumentCondtionSelect | undefined => {
     return states.find((state) => state.id == id);
+  };
+
+  const handlePageChange = (page: number) => {
+    dispatch(
+      requestGetDocuments({
+        ...pageable,
+        page: page - 1,
+      }),
+    );
   };
 
   return (
@@ -196,8 +223,13 @@ export default function Search() {
           </div>
         </form>
       </Card>
+
+      <div className="grid grid-rows-1 mt-10">
+        <div>{`총 ${total} 개`}</div>
+      </div>
+
       {/* data list */}
-      <div className="grid mt-20">
+      <div className="grid mt-10">
         <Table hoverable={true}>
           <Table.Head>
             <Table.HeadCell className="!p-4">
@@ -208,7 +240,7 @@ export default function Search() {
             ))}
           </Table.Head>
           <Table.Body className="divide-y">
-            {documents.content.map((data) => (
+            {content.map((data) => (
               <Table.Row key={data.id}>
                 <Table.Cell className="!p-4">
                   <Checkbox />
@@ -230,6 +262,21 @@ export default function Search() {
             ))}
           </Table.Body>
         </Table>
+      </div>
+      <div className="mt-4 grid grid-rows-2 justify-center items-center">
+        <div className="text-center text-gray-500">
+          {`총 ${totalPages} 페이지 중 `}
+          <span className="font-black">{`${currentPage} 페이지`}</span>
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          layout="navigation"
+          onPageChange={handlePageChange}
+          totalPages={totalPages}
+          showIcons
+          previousLabel="이전"
+          nextLabel="다음"
+        />
       </div>
     </div>
   );

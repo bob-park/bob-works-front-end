@@ -1,12 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { Page, defaultPage } from '@/common/page';
+import { Page, Pageable, defaultPage } from '@/common/page';
 import { AddVacationRequest, Documents, DocumentsState } from './types';
 
 const reducers = {
-  requestGetDocuments: (state: DocumentsState) => {
+  requestGetDocuments: (
+    state: DocumentsState,
+    action: PayloadAction<any | Pageable>,
+  ) => {
     state.isLoading = true;
-    state.documents = defaultPage;
   },
   successGetDocuments: (
     state: DocumentsState,

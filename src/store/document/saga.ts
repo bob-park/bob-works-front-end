@@ -19,6 +19,7 @@ function* callGetDocuments(action: ReturnType<typeof requestGetDocuments>) {
   const page: Page<Documents> = yield call(
     get,
     '/api/document/search',
+    action.payload,
     () => {},
   );
 

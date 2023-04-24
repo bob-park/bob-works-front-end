@@ -66,7 +66,7 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
                       className="block w-full"
                       href="/document/approve/list"
                     >
-                      결제 승인 처리 목록
+                      결제 처리 목록
                     </Link>
                   </Sidebar.Item>
                   <Sidebar.Item

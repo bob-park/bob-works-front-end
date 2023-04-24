@@ -9,6 +9,7 @@ function* callGetUser(action: ReturnType<typeof requestGetUser>) {
   const user: User = yield call(
     get,
     '/api/user',
+    null,
     action.payload.exceptionHandle,
   );
 

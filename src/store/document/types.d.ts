@@ -15,7 +15,7 @@ type Documents = {
 
 type DocumentsState = {
   isLoading: boolean;
-  documents: Page<Documents> = {};
+  documents: Page<Documents>;
 };
 
 type VacationType = 'GENERAL' | 'ALTERNATIVE';

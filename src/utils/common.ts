@@ -4,9 +4,11 @@ export const client = axios.create({
   withCredentials: true,
 });
 
-export function get<T>(url: string, exceptionHandle: () => void) {
+export function get<T>(url: string, params: any, exceptionHandle: () => void) {
   const result = client
-    .get(url)
+    .get(url, {
+      params,
+    })
     .then((res: AxiosResponse<T>) => res.data)
     .catch((err) => {
       console.error(err);
