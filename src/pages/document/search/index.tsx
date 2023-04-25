@@ -150,7 +150,10 @@ export default function Search() {
       {/* search condition */}
       <Card>
         <form className="grid grid-cols-4 gap-5">
-          <DocumentTypeSearchSelect type={condition.type} />
+          <DocumentTypeSearchSelect
+            type={condition.type}
+            onChange={(type) => setCondition({ ...condition, type })}
+          />
           <div>
             <div className="mb-2 block">
               <Label htmlFor="documentStatus" value="상태" />
