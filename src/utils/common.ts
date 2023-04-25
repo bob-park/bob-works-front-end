@@ -4,7 +4,7 @@ export const client = axios.create({
   withCredentials: true,
 });
 
-export function get<T>(url: string, params: any, exceptionHandle: () => void) {
+export function get<T>(url: string, params: any, exceptionHandle?: () => void) {
   const result = client
     .get(url, {
       params,
@@ -12,7 +12,7 @@ export function get<T>(url: string, params: any, exceptionHandle: () => void) {
     .then((res: AxiosResponse<T>) => res.data)
     .catch((err) => {
       console.error(err);
-      exceptionHandle();
+      exceptionHandle && exceptionHandle();
     });
 
   return result;
