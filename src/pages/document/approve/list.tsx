@@ -1,4 +1,4 @@
-import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSearchSelect';
+import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
 import { Card, Label } from 'flowbite-react';
 import { useState } from 'react';
 
@@ -18,7 +18,15 @@ export default function ApproveList() {
       {/* search condition */}
       <Card>
         <form className="grid grid-cols-4- gap-6">
-          <DocumentTypeSearchSelect type={condition.type} />
+          <DocumentTypeSearchSelect
+            type={condition.type}
+            onChange={(type) =>
+              setCondition({
+                ...condition,
+                type,
+              })
+            }
+          />
         </form>
       </Card>
     </div>

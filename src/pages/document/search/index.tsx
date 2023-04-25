@@ -13,47 +13,21 @@ import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { documentActions } from '@/store/document';
-import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSearchSelect';
 
-type DocumentStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
+import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
+import DocumentStatusSelect, {
+  parseStatus,
+} from '@/components/search/DocumentStatusSelect';
 
 type SearchCondition = {
-  type: DocumentsTypeName | 'ALL';
+  type: DocumentConditionType;
   writer?: string;
-  status?: DocumentStatus;
+  status: DocumentConditionStatus;
   from?: Date;
   to?: Date;
 };
 
-type DocumentCondtionSelect = {
-  id: string;
-  name: string;
-};
-
 const { requestGetDocuments } = documentActions;
-
-const states: DocumentCondtionSelect[] = [
-  {
-    id: 'ALL',
-    name: '전체',
-  },
-  {
-    id: 'WAITING',
-    name: '대기',
-  },
-  {
-    id: 'PROCEEDING',
-    name: '진행',
-  },
-  {
-    id: 'APPROVE',
-    name: '승인',
-  },
-  {
-    id: 'REJECT',
-    name: '반려',
-  },
-];
 
 const headers = [
   {
@@ -78,6 +52,11 @@ const headers = [
   },
 ];
 
+const defaultCondition: SearchCondition = {
+  type: 'ALL',
+  status: 'ALL',
+};
+
 export default function Search() {
   const dispatch = useAppDispatch();
   const { documents } = useAppSelector((state) => state.document);
@@ -90,50 +69,14 @@ export default function Search() {
     Math.floor(documents.total / documents.pageable.size) +
     (documents.total % documents.pageable.size > 0 ? 1 : 0);
 
-  const [condition, setCondition] = useState<SearchCondition>({
-    type: 'ALL',
-  });
+  const [condition, setCondition] = useState<SearchCondition>(defaultCondition);
 
   useLayoutEffect(() => {
     handlePageChange(1);
   }, []);
 
-  const documentTypeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    let type: string | null = e.target.value;
-
-    if (type == 'ALL') {
-      type = null;
-    }
-
-    setCondition({
-      ...condition,
-      type: type as DocumentsTypeName,
-    });
-  };
-
-  const documentStatusHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    let status: string | null = e.target.value;
-
-    if (status == 'ALL') {
-      status = null;
-    }
-
-    setCondition({
-      ...condition,
-      status: status as DocumentStatus,
-    });
-  };
-
   const resetConditionHandler = () => {
-    setCondition({
-      type: 'ALL',
-    });
-  };
-
-  const parseToDocumentStatus = (
-    id: DocumentStatus,
-  ): DocumentCondtionSelect | undefined => {
-    return states.find((state) => state.id == id);
+    setCondition(defaultCondition);
   };
 
   const handlePageChange = (page: number) => {
@@ -154,23 +97,10 @@ export default function Search() {
             type={condition.type}
             onChange={(type) => setCondition({ ...condition, type })}
           />
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="documentStatus" value="상태" />
-            </div>
-            <select
-              id="documentStatus"
-              className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={condition.status || 'ALL'}
-              onChange={(e) => documentStatusHandler(e)}
-            >
-              {states.map((state) => (
-                <option key={state.id} value={state.id}>
-                  {state.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <DocumentStatusSelect
+            status={condition.status}
+            onChange={(status) => setCondition({ ...condition, status })}
+          />
           <div className="col-span-4">
             <div className="grid grid-cols-8 gap-3">
               <Button
@@ -213,9 +143,7 @@ export default function Search() {
                 </Table.Cell>
                 <Table.Cell>{data.id}</Table.Cell>
                 <Table.Cell>{data.documentType.name}</Table.Cell>
-                <Table.Cell>
-                  {parseToDocumentStatus(data.status as DocumentStatus)?.name}
-                </Table.Cell>
+                <Table.Cell>{parseStatus(data.status)}</Table.Cell>
                 <Table.Cell>{data.writer.name}</Table.Cell>
                 <Table.Cell>
                   {String(

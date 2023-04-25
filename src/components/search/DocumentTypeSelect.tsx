@@ -2,8 +2,8 @@ import { Label } from 'flowbite-react';
 import { ChangeEvent, useLayoutEffect, useState } from 'react';
 
 type DocumentTypeSearchSelectProps = {
-  type: DocumentsTypeName | 'ALL';
-  onChange?: (type: DocumentsTypeName | 'ALL') => void;
+  type: DocumentConditionType;
+  onChange?: (type: DocumentConditionType) => void;
 };
 
 const types: DocumentCondtionSelect[] = [
@@ -21,16 +21,14 @@ export default function DocumentTypeSearchSelect({
   type,
   onChange,
 }: DocumentTypeSearchSelectProps) {
-  const [selectType, setSelectType] = useState<DocumentsTypeName | 'ALL'>(
-    'ALL',
-  );
+  const [selectType, setSelectType] = useState<DocumentConditionType>('ALL');
 
   useLayoutEffect(() => {
     setSelectType(type);
   }, []);
 
   const handleChangle = (e: ChangeEvent<HTMLSelectElement>) => {
-    const changeType = e.target.value as DocumentsTypeName | 'ALL';
+    const changeType = e.target.value as DocumentConditionType;
 
     setSelectType(changeType);
 
