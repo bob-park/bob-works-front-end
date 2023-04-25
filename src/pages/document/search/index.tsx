@@ -29,7 +29,7 @@ const { requestGetDocuments } = documentActions;
 const headers = [
   {
     id: 'id',
-    value: '문서 아이디',
+    value: '문서 번호',
   },
   {
     id: 'type',

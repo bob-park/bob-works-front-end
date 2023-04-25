@@ -34,7 +34,7 @@ const defaultCondition: ApproveSearchCondition = {
 const headers = [
   {
     id: 'id',
-    value: '결제 아이디',
+    value: '결제 번호',
   },
   {
     id: 'documentType',
