@@ -1,21 +1,22 @@
-import {
-  combineReducers,
-  MiddlewareArray,
-  configureStore,
-} from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware, { Task } from 'redux-saga';
 import { createWrapper } from 'next-redux-wrapper';
 
 import rootSaga from './saga';
 
 import { AUTHENTICATION, authenticationReducer } from './authentication';
-import { DOCUMENT_TYPE, documentTypeReducer } from './document/type';
 import { DOCUMENT, documentReducer } from './document';
+import { DOCUMENT_TYPE, documentTypeReducer } from './document/type';
+import {
+  DOCUMENT_APPROVAL,
+  documentApprovalReducer,
+} from './document/approval';
 
 const rootReducer = combineReducers({
   [AUTHENTICATION]: authenticationReducer,
   [DOCUMENT_TYPE]: documentTypeReducer,
   [DOCUMENT]: documentReducer,
+  [DOCUMENT_APPROVAL]: documentApprovalReducer,
 });
 
 function rootStore() {
