@@ -34,7 +34,9 @@ export default function DocumentTableList({
             </Table.HeadCell>
             {headers.map((header) => (
               <Table.Cell key={`${header.id}_${data.id}`}>
-                {header.parse ? header.parse(data[header.id]) : data[header.id]}
+                {header.parse && data[header.id]
+                  ? header.parse(data[header.id])
+                  : data[header.id]}
               </Table.Cell>
             ))}
           </Table.Row>
