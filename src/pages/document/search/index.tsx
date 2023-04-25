@@ -69,14 +69,16 @@ export default function Search() {
     Math.floor(documents.total / documents.pageable.size) +
     (documents.total % documents.pageable.size > 0 ? 1 : 0);
 
-  const [condition, setCondition] = useState<SearchCondition>(defaultCondition);
+  const [condition, setCondition] = useState<SearchCondition>({
+    ...defaultCondition,
+  });
 
   useLayoutEffect(() => {
     handlePageChange(1);
   }, []);
 
   const resetConditionHandler = () => {
-    setCondition(defaultCondition);
+    setCondition({ ...defaultCondition });
   };
 
   const handlePageChange = (page: number) => {

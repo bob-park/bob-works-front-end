@@ -25,7 +25,7 @@ export default function DocumentTypeSearchSelect({
 
   useLayoutEffect(() => {
     setSelectType(type);
-  }, []);
+  }, [type]);
 
   const handleChangle = (e: ChangeEvent<HTMLSelectElement>) => {
     const changeType = e.target.value as DocumentConditionType;
