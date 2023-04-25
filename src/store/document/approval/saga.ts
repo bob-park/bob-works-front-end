@@ -16,7 +16,7 @@ const {
 function* callGetApporvals(action: ReturnType<typeof requestGetApprovals>) {
   const page: Page<DocumentApproval> = yield call(
     get,
-    '/api/document/approval',
+    '/api/document/approval/search',
     action.payload,
   );
 

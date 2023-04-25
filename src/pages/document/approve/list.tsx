@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
+import { format } from 'date-fns';
 
 import { Button, Card, Label, Table, TextInput } from 'flowbite-react';
 
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import {
   DocumentPagination,
   DocumentTypeSelect,
@@ -10,11 +12,18 @@ import {
   DocumentTableList,
 } from '@/components/search';
 
+import { documentApprovalActions } from '@/store/document/approval';
+import { getTotalPages } from '@/common/page';
+import { data } from 'autoprefixer';
+import { parseStatus } from '@/components/search/DocumentStatusSelect';
+
 type ApproveSearchCondition = {
   type: DocumentConditionType;
   status: DocumentConditionStatus;
   writerId?: string;
 };
+
+const { requestGetApprovals } = documentApprovalActions;
 
 const defaultCondition: ApproveSearchCondition = {
   type: 'ALL',
@@ -38,6 +47,7 @@ const headers = [
   {
     id: 'status',
     value: '결제 상태',
+    parse: (input: DocumentConditionStatus) => parseStatus(input),
   },
   {
     id: 'reason',
@@ -46,20 +56,41 @@ const headers = [
   {
     id: 'approvedDateTime',
     value: '결제일',
+    parse: (input: Date) => format(new Date(input), 'yyyy-MM-dd hh:mm:ss'),
   },
 ];
 
-const dummyDatas = [];
-
 export default function ApproveList() {
+  const dispatch = useAppDispatch();
+  const { isLoading, approvals } = useAppSelector(
+    (state) => state.documentApproval,
+  );
+
   const [condition, setCondition] = useState<ApproveSearchCondition>({
     ...defaultCondition,
   });
 
-  const total = 0;
-  const totalPages = 2;
-  const currentPage = 1;
+  const { pageable, content, total } = approvals;
 
+  const currentPage = pageable.page + 1;
+  const totalPages = getTotalPages(total, pageable.size);
+  const dataList = content.map((item) => {
+    return {
+      id: item.id,
+      documentType: item.document.documentType.name,
+      writerId: item.document.writer.name,
+      status: item.status,
+      reason: item.reason,
+      approvedDateTime: item.approvedDateTime,
+    };
+  });
+
+  /* useEffect */
+  useLayoutEffect(() => {
+    handlePageChange(1);
+  }, []);
+
+  /* handle */
   const handleReset = () => {
     setCondition({
       ...defaultCondition,
@@ -67,7 +98,12 @@ export default function ApproveList() {
   };
 
   const handlePageChange = (page: number) => {
-    console.log(`page=${page}`);
+    dispatch(
+      requestGetApprovals({
+        ...pageable,
+        page: page - 1,
+      }),
+    );
   };
 
   return (
@@ -128,7 +164,7 @@ export default function ApproveList() {
 
       {/* data list */}
       <div className="grid mt-10">
-        <DocumentTableList headers={headers} />
+        <DocumentTableList headers={headers} dataList={dataList} />
       </div>
 
       {/* pagination */}

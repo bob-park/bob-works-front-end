@@ -14,6 +14,7 @@ import {
   DocumentTableList,
 } from '@/components/search';
 import { parseStatus } from '@/components/search/DocumentStatusSelect';
+import { getTotalPages } from '@/common/page';
 
 type SearchCondition = {
   type: DocumentConditionType;
@@ -73,9 +74,7 @@ export default function Search() {
   });
 
   const currentPage = pageable.page + 1;
-  const totalPages =
-    Math.floor(documents.total / documents.pageable.size) +
-    (documents.total % documents.pageable.size > 0 ? 1 : 0);
+  const totalPages = getTotalPages(total, pageable.size);
 
   const [condition, setCondition] = useState<SearchCondition>({
     ...defaultCondition,

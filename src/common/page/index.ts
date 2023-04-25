@@ -26,3 +26,7 @@ export const defaultPage = {
     size: 10,
   },
 };
+
+export function getTotalPages(total: number, size: number) {
+  return Math.floor(total / size) + (total % size > 0 ? 1 : 0);
+}
