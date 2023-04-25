@@ -1,4 +1,5 @@
 import DocumentStatusSelect from '@/components/search/DocumentStatusSelect';
+import { DocumentTableList } from '@/components/search/DocumentTableList';
 import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
 import { Button, Card, Label, Table, TextInput } from 'flowbite-react';
 import { useState } from 'react';
@@ -19,23 +20,27 @@ const defaultCondition: ApproveSearchCondition = {
 const headers = [
   {
     id: 'id',
-    name: '문서 아이디',
+    value: '결제 아이디',
   },
   {
-    id: 'type',
-    name: '종류',
+    id: 'documentType',
+    value: '문서 종류',
+  },
+  {
+    id: 'writerId',
+    value: '결제 요청자',
   },
   {
     id: 'status',
-    name: '상태',
+    value: '결제 상태',
   },
   {
-    id: 'writer',
-    name: '신청자',
+    id: 'reason',
+    value: '반려 사유',
   },
   {
-    id: 'createdDate',
-    name: '생성일',
+    id: 'approvedDateTime',
+    value: '결제일',
   },
 ];
 
@@ -45,6 +50,8 @@ export default function ApproveList() {
   const [condition, setCondition] = useState<ApproveSearchCondition>({
     ...defaultCondition,
   });
+
+  const total = 0;
 
   const handleReset = () => {
     setCondition({
@@ -104,8 +111,14 @@ export default function ApproveList() {
         </form>
       </Card>
 
+      <div className="grid grid-rows-1 mt-10">
+        <div>{`총 ${total} 개`}</div>
+      </div>
+
       {/* data list */}
-      <Table hoverable={true}></Table>
+      <div className="grid mt-10">
+        <DocumentTableList headers={headers} />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { Card, Button, Pagination } from 'flowbite-react';
+import { Card, Button } from 'flowbite-react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
 import { format } from 'date-fns';
 
@@ -12,6 +12,7 @@ import DocumentStatusSelect, {
   parseStatus,
 } from '@/components/search/DocumentStatusSelect';
 import { DocumentTableList } from '@/components/search/DocumentTableList';
+import DocumentPagination from '@/components/search/DocumentPagination';
 
 type SearchCondition = {
   type: DocumentConditionType;
@@ -136,19 +137,13 @@ export default function Search() {
       <div className="grid mt-10">
         <DocumentTableList headers={headers} dataList={dataList} />
       </div>
+
+      {/* pagination */}
       <div className="mt-4 grid grid-rows-2 justify-center items-center">
-        <div className="text-center text-gray-500">
-          {`총 ${totalPages} 페이지 중 `}
-          <span className="font-black">{`${currentPage} 페이지`}</span>
-        </div>
-        <Pagination
-          currentPage={currentPage}
-          layout="navigation"
-          onPageChange={handlePageChange}
+        <DocumentPagination
           totalPages={totalPages}
-          showIcons
-          previousLabel="이전"
-          nextLabel="다음"
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
         />
       </div>
     </div>
