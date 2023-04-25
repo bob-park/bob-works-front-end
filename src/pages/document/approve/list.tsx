@@ -1,3 +1,4 @@
+import DocumentPagination from '@/components/search/DocumentPagination';
 import DocumentStatusSelect from '@/components/search/DocumentStatusSelect';
 import { DocumentTableList } from '@/components/search/DocumentTableList';
 import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
@@ -52,11 +53,17 @@ export default function ApproveList() {
   });
 
   const total = 0;
+  const totalPages = 2;
+  const currentPage = 1;
 
   const handleReset = () => {
     setCondition({
       ...defaultCondition,
     });
+  };
+
+  const handlePageChange = (page: number) => {
+    console.log(`page=${page}`);
   };
 
   return (
@@ -118,6 +125,15 @@ export default function ApproveList() {
       {/* data list */}
       <div className="grid mt-10">
         <DocumentTableList headers={headers} />
+      </div>
+
+      {/* pagination */}
+      <div className="mt-4 grid grid-rows-2 justify-center items-center">
+        <DocumentPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
