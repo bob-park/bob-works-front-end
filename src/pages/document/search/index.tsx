@@ -1,12 +1,5 @@
-import { ChangeEvent, useLayoutEffect, useState } from 'react';
-import {
-  Label,
-  Card,
-  Button,
-  Table,
-  Checkbox,
-  Pagination,
-} from 'flowbite-react';
+import { useLayoutEffect, useState } from 'react';
+import { Card, Button, Pagination } from 'flowbite-react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
 import { format } from 'date-fns';
 
@@ -18,6 +11,7 @@ import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
 import DocumentStatusSelect, {
   parseStatus,
 } from '@/components/search/DocumentStatusSelect';
+import { DocumentTableList } from '@/components/search/DocumentTableList';
 
 type SearchCondition = {
   type: DocumentConditionType;
@@ -32,23 +26,25 @@ const { requestGetDocuments } = documentActions;
 const headers = [
   {
     id: 'id',
-    name: '문서 아이디',
+    value: '문서 아이디',
   },
   {
     id: 'type',
-    name: '종류',
+    value: '종류',
   },
   {
     id: 'status',
-    name: '상태',
+    value: '상태',
+    parse: (input: DocumentConditionStatus) => parseStatus(input),
   },
   {
     id: 'writer',
-    name: '신청자',
+    value: '신청자',
   },
   {
     id: 'createdDate',
-    name: '생성일',
+    value: '생성일',
+    parse: (input: Date) => format(new Date(input), 'yyyy-MM-dd hh:mm:ss'),
   },
 ];
 
@@ -63,6 +59,16 @@ export default function Search() {
   const {} = useAppSelector((state) => state.documentsType);
 
   const { content, pageable, total } = documents;
+
+  const dataList = content.map((item) => {
+    return {
+      id: item.id,
+      type: item.documentType.name,
+      status: item.status,
+      writer: item.writer.name,
+      createdDate: item.createdDate,
+    };
+  });
 
   const currentPage = pageable.page + 1;
   const totalPages =
@@ -128,34 +134,7 @@ export default function Search() {
 
       {/* data list */}
       <div className="grid mt-10">
-        <Table hoverable={true}>
-          <Table.Head>
-            <Table.HeadCell className="!p-4">
-              <Checkbox />
-            </Table.HeadCell>
-            {headers.map((header) => (
-              <Table.HeadCell key={header.id}>{header.name}</Table.HeadCell>
-            ))}
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {content.map((data) => (
-              <Table.Row key={data.id}>
-                <Table.Cell className="!p-4">
-                  <Checkbox />
-                </Table.Cell>
-                <Table.Cell>{data.id}</Table.Cell>
-                <Table.Cell>{data.documentType.name}</Table.Cell>
-                <Table.Cell>{parseStatus(data.status)}</Table.Cell>
-                <Table.Cell>{data.writer.name}</Table.Cell>
-                <Table.Cell>
-                  {String(
-                    format(new Date(data.createdDate), 'yyyy-MM-dd hh:mm:ss'),
-                  )}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        <DocumentTableList headers={headers} dataList={dataList} />
       </div>
       <div className="mt-4 grid grid-rows-2 justify-center items-center">
         <div className="text-center text-gray-500">

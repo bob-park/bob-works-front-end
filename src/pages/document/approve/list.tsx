@@ -1,6 +1,6 @@
 import DocumentStatusSelect from '@/components/search/DocumentStatusSelect';
 import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
-import { Button, Card, Label, TextInput } from 'flowbite-react';
+import { Button, Card, Label, Table, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
 
@@ -15,6 +15,31 @@ const defaultCondition: ApproveSearchCondition = {
   status: 'ALL',
   writerId: '',
 };
+
+const headers = [
+  {
+    id: 'id',
+    name: '문서 아이디',
+  },
+  {
+    id: 'type',
+    name: '종류',
+  },
+  {
+    id: 'status',
+    name: '상태',
+  },
+  {
+    id: 'writer',
+    name: '신청자',
+  },
+  {
+    id: 'createdDate',
+    name: '생성일',
+  },
+];
+
+const dummyDatas = [];
 
 export default function ApproveList() {
   const [condition, setCondition] = useState<ApproveSearchCondition>({
@@ -78,6 +103,9 @@ export default function ApproveList() {
           </div>
         </form>
       </Card>
+
+      {/* data list */}
+      <Table hoverable={true}></Table>
     </div>
   );
 }
