@@ -1,10 +1,14 @@
-import DocumentPagination from '@/components/search/DocumentPagination';
-import DocumentStatusSelect from '@/components/search/DocumentStatusSelect';
-import { DocumentTableList } from '@/components/search/DocumentTableList';
-import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
-import { Button, Card, Label, Table, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { MdOutlineRefresh, MdSearch } from 'react-icons/md';
+
+import { Button, Card, Label, Table, TextInput } from 'flowbite-react';
+
+import {
+  DocumentPagination,
+  DocumentTypeSelect,
+  DocumentStatusSelect,
+  DocumentTableList,
+} from '@/components/search';
 
 type ApproveSearchCondition = {
   type: DocumentConditionType;
@@ -71,7 +75,7 @@ export default function ApproveList() {
       {/* search condition */}
       <Card>
         <form className="grid grid-cols-4 gap-6">
-          <DocumentTypeSearchSelect
+          <DocumentTypeSelect
             type={condition.type}
             onChange={(type) =>
               setCondition({

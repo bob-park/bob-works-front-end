@@ -7,12 +7,13 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { documentActions } from '@/store/document';
 
-import DocumentTypeSearchSelect from '@/components/search/DocumentTypeSelect';
-import DocumentStatusSelect, {
-  parseStatus,
-} from '@/components/search/DocumentStatusSelect';
-import { DocumentTableList } from '@/components/search/DocumentTableList';
-import DocumentPagination from '@/components/search/DocumentPagination';
+import {
+  DocumentPagination,
+  DocumentTypeSelect,
+  DocumentStatusSelect,
+  DocumentTableList,
+} from '@/components/search';
+import { parseStatus } from '@/components/search/DocumentStatusSelect';
 
 type SearchCondition = {
   type: DocumentConditionType;
@@ -102,7 +103,7 @@ export default function Search() {
       {/* search condition */}
       <Card>
         <form className="grid grid-cols-4 gap-5">
-          <DocumentTypeSearchSelect
+          <DocumentTypeSelect
             type={condition.type}
             onChange={(type) => setCondition({ ...condition, type })}
           />

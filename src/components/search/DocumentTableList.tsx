@@ -12,7 +12,7 @@ type DocumentTableListProps = {
   dataList?: any[];
 };
 
-export function DocumentTableList({
+export default function DocumentTableList({
   headers,
   dataList,
 }: DocumentTableListProps) {

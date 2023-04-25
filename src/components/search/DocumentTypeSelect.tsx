@@ -1,5 +1,5 @@
-import { Label } from 'flowbite-react';
 import { ChangeEvent, useLayoutEffect, useState } from 'react';
+import { Label } from 'flowbite-react';
 
 type DocumentTypeSearchSelectProps = {
   type: DocumentConditionType;
@@ -17,7 +17,7 @@ const types: DocumentCondtionSelect[] = [
   },
 ];
 
-export default function DocumentTypeSearchSelect({
+export default function DocumentTypeSelect({
   type,
   onChange,
 }: DocumentTypeSearchSelectProps) {
