@@ -10,6 +10,9 @@ const {
   /* get aprrovals */
   requestGetApprovals,
   successGetApporvals,
+  /* get apporval */
+  requestGetApproval,
+  successGetApproval,
 } = documentApprovalActions;
 
 /* get approvals */
@@ -27,6 +30,23 @@ function* watchGetApprovals() {
   yield takeLatest(requestGetApprovals, callGetApporvals);
 }
 
+/* get approval */
+function* callGetApproval(action: ReturnType<typeof requestGetApproval>) {
+  const { approvalId } = action.payload;
+
+  const approval: DocumentApproval = yield call(
+    get,
+    `/api/document/approval/${approvalId}`,
+    null,
+  );
+
+  yield put(successGetApproval(approval));
+}
+
+function* watchGetApproval() {
+  yield takeLatest(requestGetApproval, callGetApproval);
+}
+
 export default function* docuemntApprovalSagas() {
-  yield all([fork(watchGetApprovals)]);
+  yield all([fork(watchGetApprovals), fork(watchGetApproval)]);
 }

@@ -5,16 +5,23 @@ import { format } from 'date-fns';
 
 import { useRouter } from 'next/router';
 
-import { useAppSelector } from '@/hooks/reduxHook';
-import { DocumentApproval } from '@/store/document/approval/types';
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
+import { documentApprovalActions } from '@/store/document/approval';
+
+const { requestGetApproval } = documentApprovalActions;
 
 export default function DocumentVacationApproval() {
   const router = useRouter();
-  const {} = useAppSelector((state) => state.documentApproval);
+  const disaptch = useAppDispatch();
+  const { approval } = useAppSelector((state) => state.documentApproval);
 
   const now = new Date();
 
-  useLayoutEffect(() => {}, []);
+  useLayoutEffect(() => {
+    const { approvalId } = router.query;
+
+    disaptch(requestGetApproval({ approvalId: Number(approvalId) }));
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -39,31 +46,37 @@ export default function DocumentVacationApproval() {
             <div className="inline-block w-32 text-right mr-2 text-lg">
               문 서 번 호 :
             </div>
-            <span className="ml-10 text-xl font-medium">1</span>
+            <span className="ml-10 text-xl font-medium">
+              {approval?.document.id}
+            </span>
           </div>
           <div>
             <div className="inline-block w-32 text-right mr-2 text-lg">
               성 명 :
             </div>
-            <span className="ml-10 text-xl font-medium">1</span>
+            <span className="ml-10 text-xl font-medium">
+              {approval?.document.writer.name}
+            </span>
           </div>
           <div>
             <div className="inline-block w-32 text-right mr-2 text-lg">
               부 서 :
             </div>
-            <span className="ml-10 text-xl font-medium">1</span>
+            <span className="ml-10 text-xl font-medium">dummy</span>
           </div>
           <div>
             <div className="inline-block w-32 text-right mr-2 text-lg">
               직 급 :
             </div>
-            <span className="ml-10 text-xl font-medium">1</span>
+            <span className="ml-10 text-xl font-medium">
+              {approval?.document.writer.position?.name}
+            </span>
           </div>
           <div>
             <div className="inline-block w-32 text-right mr-2 text-lg">
               휴 가 기 간 :
             </div>
-            <span className="ml-10 text-xl font-medium">1</span>
+            <span className="ml-10 text-xl font-medium"></span>
           </div>
           <div>
             <div className="inline-block w-32 text-right mr-2 text-lg">
