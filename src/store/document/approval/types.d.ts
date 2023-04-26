@@ -12,4 +12,5 @@ type DocumentApproval = {
 type DocumentApprovalState = {
   isLoading: boolean;
   approvals: Page<DocumentApproval>;
+  approval?: DocumentApproval | null;
 };

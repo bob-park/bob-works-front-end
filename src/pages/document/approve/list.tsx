@@ -14,8 +14,8 @@ import {
 
 import { documentApprovalActions } from '@/store/document/approval';
 import { getTotalPages } from '@/common/page';
-import { data } from 'autoprefixer';
 import { parseStatus } from '@/components/search/DocumentStatusSelect';
+import { useRouter } from 'next/router';
 
 type ApproveSearchCondition = {
   type: DocumentConditionType;
@@ -61,10 +61,9 @@ const headers = [
 ];
 
 export default function ApproveList() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isLoading, approvals } = useAppSelector(
-    (state) => state.documentApproval,
-  );
+  const { approvals } = useAppSelector((state) => state.documentApproval);
 
   const [condition, setCondition] = useState<ApproveSearchCondition>({
     ...defaultCondition,
@@ -94,6 +93,18 @@ export default function ApproveList() {
   const handleReset = () => {
     setCondition({
       ...defaultCondition,
+    });
+  };
+
+  const handleDataRowClick = (id: number) => {
+    const type = content.find((item) => item.id == id)?.document.documentType
+      .type;
+
+    router.push({
+      pathname: `/document/approve/${type.toLowerCase()}`,
+      query: {
+        approvalId: id,
+      },
     });
   };
 
@@ -164,7 +175,11 @@ export default function ApproveList() {
 
       {/* data list */}
       <div className="grid mt-10">
-        <DocumentTableList headers={headers} dataList={dataList} />
+        <DocumentTableList
+          headers={headers}
+          dataList={dataList}
+          onRowClick={handleDataRowClick}
+        />
       </div>
 
       {/* pagination */}

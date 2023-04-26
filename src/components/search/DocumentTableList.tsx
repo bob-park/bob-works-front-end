@@ -10,12 +10,18 @@ type DocumentTableHeader = {
 type DocumentTableListProps = {
   headers: DocumentTableHeader[];
   dataList?: any[];
+  onRowClick?: (id: number) => void;
 };
 
 export default function DocumentTableList({
   headers,
   dataList,
+  onRowClick,
 }: DocumentTableListProps) {
+  const handleRowClick = (id: number) => {
+    onRowClick && onRowClick(id);
+  };
+
   return (
     <Table hoverable>
       <Table.Head>
@@ -28,7 +34,7 @@ export default function DocumentTableList({
       </Table.Head>
       <Table.Body className="divide-y">
         {dataList?.map((data: any) => (
-          <Table.Row key={data.id}>
+          <Table.Row key={data.id} onClick={() => handleRowClick(data.id)}>
             <Table.HeadCell className="!p-4">
               <Checkbox />
             </Table.HeadCell>

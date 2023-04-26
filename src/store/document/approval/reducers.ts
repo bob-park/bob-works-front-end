@@ -16,6 +16,18 @@ const reducers = {
     state.isLoading = false;
     state.approvals = action.payload;
   },
+  requestGetApproval: (
+    state: DocumentApprovalState,
+    action: PayloadAction<{ approvalId: number }>,
+  ) => {
+    state.approval = null;
+  },
+  successGetApproval: (
+    state: DocumentApprovalState,
+    action: PayloadAction<DocumentApproval>,
+  ) => {
+    state.approval = action.payload;
+  },
 };
 
 export default reducers;
