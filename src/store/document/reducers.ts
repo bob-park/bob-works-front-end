@@ -1,7 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import { Page, Pageable, defaultPage } from '@/common/page';
-import { AddVacationRequest, Documents, DocumentsState } from './types';
+import {
+  AddVacationRequest,
+  Documents,
+  DocumentsState,
+  VacationDocument,
+} from './types';
 
 const reducers = {
   requestGetDocuments: (
@@ -26,11 +31,23 @@ const reducers = {
   ) => {
     state.isLoading = false;
   },
-  scuccessAddVacation: (
+  successAddVacation: (
     state: DocumentsState,
     action: PayloadAction<Documents>,
   ) => {
     state.isLoading = true;
+  },
+  requestGetVacationDocument: (
+    state: DocumentsState,
+    action: PayloadAction<{ documentId: number }>,
+  ) => {
+    state.vacationDocument = null;
+  },
+  successGetVacationDocument: (
+    state: DocumentsState,
+    action: PayloadAction<VacationDocument>,
+  ) => {
+    state.vacationDocument = action.payload;
   },
 };
 

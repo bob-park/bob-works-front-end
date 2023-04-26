@@ -16,6 +16,7 @@ type Documents = {
 type DocumentsState = {
   isLoading: boolean;
   documents: Page<Documents>;
+  vacationDocument?: VacationDocument | null;
 };
 
 type VacationType = 'GENERAL' | 'ALTERNATIVE';
@@ -23,6 +24,14 @@ type VacationSubType = 'AM' | 'PM';
 
 type AddVacationRequest = {
   typeId: number;
+  vacationType: VacationType;
+  vacationSubType?: VacationSubType;
+  vacationDateFrom: Date;
+  vacationDateTo: Date;
+  reason: string;
+};
+
+type VacationDocument = Documents & {
   vacationType: VacationType;
   vacationSubType?: VacationSubType;
   vacationDateFrom: Date;

@@ -3,7 +3,7 @@ import { call, all, takeLatest, fork, put, delay } from 'redux-saga/effects';
 import { get, post } from '@/utils/common';
 import { documentActions } from '.';
 import { Page } from '@/common/page';
-import { Documents } from './types';
+import { Documents, VacationDocument } from './types';
 
 const {
   /* get documents */
@@ -11,7 +11,10 @@ const {
   successGetDocuments,
   /* add vacation documents */
   requestAddVacation,
-  scuccessAddVacation,
+  successAddVacation,
+  /** get vacation document */
+  requestGetVacationDocument,
+  successGetVacationDocument,
 } = documentActions;
 
 /* get documents */
@@ -40,7 +43,7 @@ function* callAddVacation(action: ReturnType<typeof requestAddVacation>) {
     requestBody,
   );
 
-  yield put(scuccessAddVacation(response));
+  yield put(successAddVacation(response));
 
   handleAfter && handleAfter();
 }
@@ -49,6 +52,29 @@ function* watchAddVacation() {
   yield takeLatest(requestAddVacation, callAddVacation);
 }
 
+/** get vacation document */
+function* callGetVacationDocument(
+  action: ReturnType<typeof requestGetVacationDocument>,
+) {
+  const { documentId } = action.payload;
+
+  const vacation: VacationDocument = yield call(
+    get,
+    `/api/document/vacation/${documentId}`,
+    null,
+  );
+
+  yield put(successGetVacationDocument(vacation));
+}
+
+function* watchGetVacationDocument() {
+  yield takeLatest(requestGetVacationDocument, callGetVacationDocument);
+}
+
 export default function* authencationSagas() {
-  yield all([fork(watchGetDocuments), fork(watchAddVacation)]);
+  yield all([
+    fork(watchGetDocuments),
+    fork(watchAddVacation),
+    fork(watchGetVacationDocument),
+  ]);
 }
