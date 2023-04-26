@@ -36,5 +36,6 @@ type VacationDocument = Documents & {
   vacationSubType?: VacationSubType;
   vacationDateFrom: Date;
   vacationDateTo: Date;
+  daysCount: number;
   reason: string;
 };

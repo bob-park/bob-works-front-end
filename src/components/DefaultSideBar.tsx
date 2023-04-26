@@ -68,7 +68,7 @@ export default function DefaultSideBar({
                   </Sidebar.Item>
                   <Sidebar.Item
                     as="p"
-                    active={router.pathname == '/document/approve/list'}
+                    active={router.pathname.startsWith('/document/approve')}
                   >
                     <Link
                       className="block w-full"
