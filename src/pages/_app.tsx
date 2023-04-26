@@ -45,7 +45,11 @@ function App({ Component, pageProps }: AppProps) {
         <div className="flex p-10 w-full h-full">
           {/* TODO 나중에 이거 꼭 반응형으로 바꾸잣 */}
 
-          <div className="flex-initial min-w-[300px] border-r-2 border-solid">
+          <div
+            className={`flex-initial min-w-[300px] ${
+              user && 'border-r-2 border-solid'
+            }`}
+          >
             <div className="h-full">
               {user && <DefaultSideBar user={user} onLogout={processLogout} />}
             </div>
