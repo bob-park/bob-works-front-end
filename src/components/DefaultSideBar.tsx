@@ -7,10 +7,18 @@ import Link from 'next/link';
 
 export type DefaultSideBarProps = {
   user: User;
+  onLogout?: () => void;
 };
 
-export default function DefaultSideBar({ user }: DefaultSideBarProps) {
+export default function DefaultSideBar({
+  user,
+  onLogout,
+}: DefaultSideBarProps) {
   const router = useRouter();
+
+  const handleLogout = () => {
+    onLogout && onLogout();
+  };
 
   return (
     <>
@@ -92,7 +100,11 @@ export default function DefaultSideBar({ user }: DefaultSideBarProps) {
             <Sidebar aria-label="Sidebar with content separator example">
               <Sidebar.Items>
                 <Sidebar.ItemGroup>
-                  <Sidebar.Item icon={IoIosLogOut}>로그아웃</Sidebar.Item>
+                  <Sidebar.Item icon={IoIosLogOut}>
+                    <Link className="block w-full" href="/api/logout">
+                      로그아웃
+                    </Link>
+                  </Sidebar.Item>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </Sidebar>

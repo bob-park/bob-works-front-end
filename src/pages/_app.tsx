@@ -21,21 +21,20 @@ const { requestGetUser } = authenticationActions;
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const { user } = useAppSelector((state) => state.authentication);
+  const { isLoggedIn, user } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(
       requestGetUser({
-        exceptionHandle: () =>
-          router.push('/api/oauth2/authorization/bob-works'),
+        exceptionHandle: () => router.push('/login'),
       }),
     );
   }, []);
 
-  if (!user) {
-    return <LoginLoading />;
-  }
+  const processLogout = () => {
+    router.push('/api/logout');
+  };
 
   return (
     <>
@@ -45,9 +44,10 @@ function App({ Component, pageProps }: AppProps) {
       <div className="h-screen w-screen">
         <div className="flex p-10 w-full h-full">
           {/* TODO 나중에 이거 꼭 반응형으로 바꾸잣 */}
+
           <div className="flex-initial min-w-[300px] border-r-2 border-solid">
             <div className="h-full">
-              <DefaultSideBar user={user} />
+              {user && <DefaultSideBar user={user} onLogout={processLogout} />}
             </div>
           </div>
 
