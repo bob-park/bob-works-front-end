@@ -61,15 +61,15 @@ export default function VacationDocumentRequest() {
   const { types } = useAppSelector((state) => state.documentsType);
   const dispatch = useAppDispatch();
 
-  const documentType = types.find((type) => type.type === 'VACATION');
+  const documentType = types?.find((type) => type.type === 'VACATION');
 
-  const [vacationType, setVacationType] = useState<VacationSelect | undefined>(
+  const [vacationType, setVacationType] = useState<VacationSelect>(
     vacationTypes[0],
   );
 
-  const [vacationSubType, setVacationSubType] = useState<
-    VacationSelect | undefined
-  >(vacationSubTypes[0]);
+  const [vacationSubType, setVacationSubType] = useState<VacationSelect>(
+    vacationSubTypes[0],
+  );
 
   const [dateValue, setDateValue] = useState<VacationDate>({
     startDate: new Date(),
@@ -128,7 +128,8 @@ export default function VacationDocumentRequest() {
                 const type = vacationTypes.find(
                   (vacationType) => vacationType.id == e.target.value,
                 );
-                setVacationType(type);
+
+                type && setVacationType(type);
               }}
             >
               {vacationTypes.map((vacationType) => (
@@ -150,7 +151,7 @@ export default function VacationDocumentRequest() {
                 const subType = vacationSubTypes.find(
                   (vacatioSubnType) => vacatioSubnType.id == e.target.value,
                 );
-                setVacationSubType(subType);
+                subType && setVacationSubType(subType);
               }}
             >
               {vacationSubTypes.map((vacationSubType) => (

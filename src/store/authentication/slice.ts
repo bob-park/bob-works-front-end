@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import reducers from './reducers';
 
-const initialState: Authentication = {
-  isLoggedIn: false,
+const initialState: AuthenticationState = {
+  isLoading: false,
 };
 
 export default createSlice({

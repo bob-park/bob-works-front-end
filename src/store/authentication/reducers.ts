@@ -2,14 +2,13 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 const reducers = {
   requestGetUser: (
-    state: Authentication,
+    state: AuthenticationState,
     action: PayloadAction<{ exceptionHandle: () => void }>,
   ) => {
-    state.isLoggedIn = false;
-    state.user = undefined;
+    state.isLoading = true;
   },
-  successGetUser: (state: Authentication, action: PayloadAction<User>) => {
-    state.isLoggedIn = true;
+  successGetUser: (state: AuthenticationState, action: PayloadAction<User>) => {
+    state.isLoading = false;
     state.user = action.payload;
   },
 };

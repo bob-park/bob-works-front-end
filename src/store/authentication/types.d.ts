@@ -22,7 +22,7 @@ type User = {
   };
 };
 
-type Authentication = {
+type AuthenticationState = {
   user?: User;
-  isLoggedIn: boolean;
+  isLoading: boolean;
 };

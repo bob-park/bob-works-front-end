@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -21,10 +21,10 @@ const { requestGetUser } = authenticationActions;
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const { isLoggedIn, user } = useAppSelector((state) => state.authentication);
+  const { isLoading, user } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(
       requestGetUser({
         exceptionHandle: () => router.push('/login'),
@@ -35,6 +35,10 @@ function App({ Component, pageProps }: AppProps) {
   const processLogout = () => {
     router.push('/api/logout');
   };
+
+  if (isLoading) {
+    return <LoginLoading />;
+  }
 
   return (
     <>

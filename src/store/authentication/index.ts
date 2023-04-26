@@ -3,10 +3,10 @@ import slice from './slice';
 import { RootState } from '@/store/store';
 
 const selectorAllState = createSelector(
-  (state: Authentication) => state.isLoggedIn,
-  (state: Authentication) => state.user,
-  (isLoggedIn, user) => ({
-    isLoggedIn,
+  (state: AuthenticationState) => state.isLoading,
+  (state: AuthenticationState) => state.user,
+  (isLoading, user) => ({
+    isLoading,
     user,
   }),
 );
