@@ -34,7 +34,7 @@ export default function ApprovalModal({
   const handleApprove = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    onApprove && onApprove();
+    onApprove && onApprove(reason);
   };
 
   return (
