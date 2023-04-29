@@ -16,10 +16,6 @@ export default function DefaultSideBar({
 }: DefaultSideBarProps) {
   const router = useRouter();
 
-  const handleLogout = () => {
-    onLogout && onLogout();
-  };
-
   return (
     <>
       <div className="h-full">

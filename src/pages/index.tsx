@@ -1,7 +1,13 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { Card } from 'flowbite-react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { authenticationActions } from '@/store/authentication';
+
+const { requestGetUser } = authenticationActions;
 
 export default function Home() {
+  const router = useRouter();
   const { user } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
@@ -10,6 +16,8 @@ export default function Home() {
     totalCount: 0,
     usedCount: 0,
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div className="grid grid-cols-3 gap-4">

@@ -1,5 +1,5 @@
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 type ApprovalModalProps = {
   show: boolean;
@@ -15,7 +15,6 @@ export default function ApprovalModal({
   onApprove,
 }: ApprovalModalProps) {
   const [showModal, setShowModal] = useState<boolean>(show);
-  const [reason, setReason] = useState<string>('');
 
   // useEffect
   useEffect(() => {
@@ -27,18 +26,13 @@ export default function ApprovalModal({
     onClose && onClose();
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setReason(e.target.value);
-  };
-
   const handleApprove = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    onApprove && onApprove(reason);
+    onApprove && onApprove(e.target.reason?.value);
   };
 
   return (
-    <Modal show={showModal} onClose={handleClose}>
+    <Modal show={showModal} onClose={handleClose} dismissible>
       <form onSubmit={handleApprove}>
         <Modal.Header>{isReject ? '반려' : '결제'} 처리</Modal.Header>
         {isReject && (
@@ -47,14 +41,7 @@ export default function ApprovalModal({
               <div className="mb-2 block">
                 <Label htmlFor="reason" value="반려 사유" />
               </div>
-              <TextInput
-                autoFocus
-                id="reason"
-                required
-                placeholder="반려 사유"
-                value={reason}
-                onChange={handleChange}
-              />
+              <TextInput id="reason" required placeholder="반려 사유" />
             </div>
           </Modal.Body>
         )}
