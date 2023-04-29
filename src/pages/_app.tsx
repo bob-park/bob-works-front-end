@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -24,7 +24,7 @@ function App({ Component, pageProps }: AppProps) {
   const { isLoading, user } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(
       requestGetUser({
         exceptionHandle: () => router.push('/login'),

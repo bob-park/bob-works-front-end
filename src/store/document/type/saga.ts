@@ -10,6 +10,7 @@ function* callGetTypes(action: ReturnType<typeof requestGetTypes>) {
   const types: DocumentsType[] = yield call(
     get,
     '/api/document/type/search',
+    null,
     () => {},
   );
 
