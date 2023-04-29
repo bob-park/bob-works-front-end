@@ -31,6 +31,17 @@ type AddVacationRequest = {
   reason: string;
 };
 
+type DocumentLineStatus = {
+  id: number;
+  userId: string;
+  username: string;
+  positionId: number;
+  positionName: string;
+  status: DocumentsStatus;
+  approvedDateTime?: Date;
+  reason?: string;
+};
+
 type VacationDocument = Documents & {
   vacationType: VacationType;
   vacationSubType?: VacationSubType;
@@ -38,5 +49,5 @@ type VacationDocument = Documents & {
   vacationDateTo: Date;
   daysCount: number;
   reason: string;
-  line: DocumentsTypeApprovalLine;
+  lines: DocumentLineStatus[];
 };

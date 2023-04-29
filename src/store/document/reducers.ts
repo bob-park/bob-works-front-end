@@ -3,6 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { Page, Pageable, defaultPage } from '@/common/page';
 import {
   AddVacationRequest,
+  DocumentLineStatus,
   Documents,
   DocumentsState,
   VacationDocument,
@@ -48,13 +49,13 @@ const reducers = {
     state: DocumentsState,
     action: PayloadAction<{
       document: VacationDocument;
-      line: DocumentsTypeApprovalLine;
+      lines: DocumentLineStatus[];
     }>,
   ) => {
-    const { document, line } = action.payload;
+    const { document, lines } = action.payload;
 
     state.vacationDocument = document;
-    state.vacationDocument.line = line;
+    state.vacationDocument.lines = lines;
   },
 };
 
