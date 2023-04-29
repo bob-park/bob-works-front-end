@@ -1,4 +1,5 @@
 import { DocumentsStatus } from '@/store/document/types';
+import ApproveStamp from './ApproveStamp';
 
 export type ApprovalLine = {
   id: number;
@@ -30,7 +31,7 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
         <tr className="h-[80px]">
           {lines.map((line) => (
             <td key={`body_${line.id}`} className="border border-black">
-              {line.status}
+              {line.status === 'APPROVE' && <ApproveStamp />}
             </td>
           ))}
         </tr>

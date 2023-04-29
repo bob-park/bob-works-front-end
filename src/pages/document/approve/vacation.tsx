@@ -125,22 +125,30 @@ export default function DocumentVacationApproval() {
         {/* contents */}
         <Card className="mt-4">
           <div className="m-20 grid grid-col-1 gap-6">
-            <div className="grid w-full justify-end m-10">
-              <ApprovalLines lines={dummyLines} />
+            <div className="grid w-full justify-end m-1">
+              <ApprovalLines
+                lines={vacationDocument.lines.map((line) => {
+                  return {
+                    id: line.id,
+                    positionName: line.positionName,
+                    status: line.status,
+                  };
+                })}
+              />
             </div>
 
             <div className="flex w-full justify-center items-center m-10">
               <h3 className="text-3xl tracking-widest font-bold">휴 가 계</h3>
             </div>
-            <div>
+            {/* <div>
               <div className="inline-block w-32 text-right mr-2 text-lg">
                 문 서 번 호 :
               </div>
               <span className="ml-10 text-xl font-medium">
                 {vacationDocument.id}
               </span>
-            </div>
-            <div>
+            </div> */}
+            <div className="mt-20">
               <div className="inline-block w-32 text-right mr-2 text-lg">
                 성 명 :
               </div>
