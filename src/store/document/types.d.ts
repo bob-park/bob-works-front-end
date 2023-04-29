@@ -38,4 +38,5 @@ type VacationDocument = Documents & {
   vacationDateTo: Date;
   daysCount: number;
   reason: string;
+  line: DocumentsTypeApprovalLine;
 };

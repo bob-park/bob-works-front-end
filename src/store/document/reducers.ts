@@ -37,6 +37,7 @@ const reducers = {
   ) => {
     state.isLoading = true;
   },
+  // get vacation document
   requestGetVacationDocument: (
     state: DocumentsState,
     action: PayloadAction<{ documentId: number }>,
@@ -45,9 +46,15 @@ const reducers = {
   },
   successGetVacationDocument: (
     state: DocumentsState,
-    action: PayloadAction<VacationDocument>,
+    action: PayloadAction<{
+      document: VacationDocument;
+      line: DocumentsTypeApprovalLine;
+    }>,
   ) => {
-    state.vacationDocument = action.payload;
+    const { document, line } = action.payload;
+
+    state.vacationDocument = document;
+    state.vacationDocument.line = line;
   },
 };
 

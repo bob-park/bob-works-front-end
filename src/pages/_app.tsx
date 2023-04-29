@@ -59,7 +59,7 @@ function App({ Component, pageProps }: AppProps) {
             </div>
           </div>
 
-          <div className="grid w-full p-20 justify-center">
+          <div className="grid w-full h-full overflow-auto p-20 justify-center">
             <div className="min-w-[1000px] justify-center">
               <Component {...pageProps} />
             </div>

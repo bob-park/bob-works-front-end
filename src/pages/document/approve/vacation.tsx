@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { documentActions } from '@/store/document';
 import { documentApprovalActions } from '@/store/document/approval';
 import { VacationSubType, VacationType } from '@/store/document/types';
+import { ApprovalLines } from '@/components/document';
+import { ApprovalLine } from '@/components/document/ApprovalLines';
 
 const { requestGetVacationDocument } = documentActions;
 const { requestGetApproval } = documentApprovalActions;
@@ -32,6 +34,19 @@ const vacationSubTypes: DocumentCondtionSelect[] = [
   {
     id: 'PM',
     name: '오후',
+  },
+];
+
+const dummyLines: ApprovalLine[] = [
+  {
+    id: 1,
+    positionName: '팀장',
+    status: 'WAITING',
+  },
+  {
+    id: 2,
+    positionName: '대표이사',
+    status: 'WAITING',
   },
 ];
 
@@ -110,6 +125,10 @@ export default function DocumentVacationApproval() {
         {/* contents */}
         <Card className="mt-4">
           <div className="m-20 grid grid-col-1 gap-6">
+            <div className="grid w-full justify-end m-10">
+              <ApprovalLines lines={dummyLines} />
+            </div>
+
             <div className="flex w-full justify-center items-center m-10">
               <h3 className="text-3xl tracking-widest font-bold">휴 가 계</h3>
             </div>
@@ -152,14 +171,14 @@ export default function DocumentVacationApproval() {
                   {vacationDocument.daysCount > 1
                     ? `${format(
                         new Date(vacationDocument.vacationDateFrom),
-                        'yyyy. MM. dd',
+                        'yyyy. MM. dd.',
                       )} ~ ${format(
                         new Date(vacationDocument.vacationDateTo),
-                        'yyyy. MM. dd',
+                        'yyyy. MM. dd.',
                       )}`
                     : format(
                         new Date(vacationDocument.vacationDateFrom),
-                        'yyyy. MM. dd',
+                        'yyyy. MM. dd.',
                       )}
                 </span>
                 <span className="ml-4">
