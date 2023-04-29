@@ -26,3 +26,12 @@ export function post<B, R>(url: string, body: B) {
 
   return result;
 }
+
+export function putCall<B, R>(url: string, body: B) {
+  const result = client
+    .put(url, body)
+    .then((res: AxiosResponse<R>) => res.data)
+    .catch((err) => console.error(err));
+
+  return result;
+}

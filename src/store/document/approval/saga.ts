@@ -1,6 +1,6 @@
 import { call, all, takeLatest, fork, put, delay } from 'redux-saga/effects';
 
-import { get, post } from '@/utils/common';
+import { get, post, putCall } from '@/utils/common';
 import { Page } from '@/common/page';
 
 import { documentApprovalActions } from '.';
@@ -13,6 +13,9 @@ const {
   /* get apporval */
   requestGetApproval,
   successGetApproval,
+  // approve approval
+  requestApproveDocument,
+  successApproveDocument,
 } = documentApprovalActions;
 
 /* get approvals */
@@ -47,6 +50,26 @@ function* watchGetApproval() {
   yield takeLatest(requestGetApproval, callGetApproval);
 }
 
+function* callApproveDocument(
+  action: ReturnType<typeof requestApproveDocument>,
+) {
+  const { id, status, reason, handleAfter } = action.payload;
+
+  yield call(putCall, `/api/document/approval/${id}`, { status, reason });
+
+  yield put(successApproveDocument());
+
+  handleAfter && handleAfter();
+}
+
+function* watchRequestApproveDocument() {
+  yield takeLatest(requestApproveDocument, callApproveDocument);
+}
+
 export default function* docuemntApprovalSagas() {
-  yield all([fork(watchGetApprovals), fork(watchGetApproval)]);
+  yield all([
+    fork(watchGetApprovals),
+    fork(watchGetApproval),
+    fork(watchRequestApproveDocument),
+  ]);
 }

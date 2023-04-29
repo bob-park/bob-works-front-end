@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { DocumentApproval, DocumentApprovalState } from './types';
 import { Page, Pageable } from '@/common/page';
+import { DocumentsStatus } from '../types';
 
 const reducers = {
   requestGetApprovals: (
@@ -27,6 +28,21 @@ const reducers = {
     action: PayloadAction<DocumentApproval>,
   ) => {
     state.approval = action.payload;
+  },
+  // approve document
+  requestApproveDocument: (
+    state: DocumentApprovalState,
+    action: PayloadAction<{
+      id: number;
+      status: DocumentsStatus;
+      reason?: string;
+      handleAfter: () => void;
+    }>,
+  ) => {
+    state.isLoading = true;
+  },
+  successApproveDocument: (state: DocumentApprovalState) => {
+    state.isLoading = false;
   },
 };
 
