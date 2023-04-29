@@ -1,15 +1,50 @@
 import { DocumentsStatus } from '@/store/document/types';
 import ApproveStamp from './ApproveStamp';
 import RejectStamp from './RejectStamp';
+import { Tooltip } from 'flowbite-react';
+import { format } from 'date-fns';
 
 export type ApprovalLine = {
   id: number;
   positionName: string;
   status: DocumentsStatus;
+  approveDate?: Date;
+  reason?: string;
 };
 
 type ApprovalLinesProps = {
   lines: ApprovalLine[];
+};
+
+const Stamp = ({
+  status,
+  approveDate,
+  reason,
+}: {
+  status?: DocumentsStatus;
+  approveDate?: Date;
+  reason?: string;
+}) => {
+  if (!status || !approveDate) {
+    return null;
+  }
+
+  return (
+    <div className="grid justify-center items-center">
+      <Tooltip
+        content={
+          <div>
+            <p>{format(new Date(approveDate), 'yyyy-MM-dd HH:mm:ss')}</p>
+            <p>{reason}</p>
+          </div>
+        }
+        placement="bottom"
+      >
+        {status === 'APPROVE' && <ApproveStamp />}
+        {status === 'REJECT' && <RejectStamp />}
+      </Tooltip>
+    </div>
+  );
 };
 
 export default function ApprovalLines({ lines }: ApprovalLinesProps) {
@@ -32,8 +67,11 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
         <tr className="h-[80px]">
           {lines.map((line) => (
             <td key={`body_${line.id}`} className="border border-black">
-              {line.status === 'APPROVE' && <ApproveStamp />}
-              {line.status === 'REJECT' && <RejectStamp />}
+              <Stamp
+                status={line.status}
+                approveDate={line.approveDate}
+                reason={line.reason}
+              />
             </td>
           ))}
         </tr>

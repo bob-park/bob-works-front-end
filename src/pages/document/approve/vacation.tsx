@@ -176,6 +176,8 @@ export default function DocumentVacationApproval() {
                       id: line.id,
                       positionName: line.positionName,
                       status: line.status,
+                      approveDate: line.approvedDateTime,
+                      reason: line.reason,
                     };
                   })}
                 />
