@@ -206,7 +206,9 @@ export default function DocumentVacationApproval() {
                 <div className="inline-block w-32 text-right mr-2 text-lg">
                   부 서 :
                 </div>
-                <span className="ml-10 text-xl font-medium">dummy</span>
+                <span className="ml-10 text-xl font-medium">
+                  {vacationDocument.writer.team.name}
+                </span>
               </div>
               <div>
                 <div className="inline-block w-32 text-right mr-2 text-lg">
