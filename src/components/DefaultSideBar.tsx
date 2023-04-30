@@ -28,7 +28,7 @@ export default function DefaultSideBar({
           <div className="mt-2 font-bold text-base text-gray-500">
             <span>
               {/* 부서 */}
-              {'dummy'}
+              {user.team.name}
             </span>
             {' - '}
             <span>

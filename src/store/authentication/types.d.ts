@@ -8,12 +8,19 @@ type Position = {
   name: string;
 };
 
+type Team = {
+  id: number;
+  name: string;
+  description?: string;
+};
+
 type User = {
   id: number;
   userId: string;
   email: string;
   name: string;
   position?: Position;
+  team: Team;
   nowVacation?: {
     id: number;
     year: number;
