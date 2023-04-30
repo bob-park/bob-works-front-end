@@ -15,6 +15,7 @@ import {
 } from '@/components/search';
 import { parseStatus } from '@/components/search/DocumentStatusSelect';
 import { getTotalPages } from '@/common/page';
+import { useRouter } from 'next/router';
 
 type SearchCondition = {
   type: DocumentConditionType;
@@ -57,6 +58,8 @@ const defaultCondition: SearchCondition = {
 };
 
 export default function Search() {
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const { documents } = useAppSelector((state) => state.document);
   const {} = useAppSelector((state) => state.documentsType);
@@ -86,6 +89,17 @@ export default function Search() {
 
   const resetConditionHandler = () => {
     setCondition({ ...defaultCondition });
+  };
+
+  const handleDataRowClick = (id: number) => {
+    const type = content.find((item) => item.id == id)?.documentType.type;
+
+    router.push({
+      pathname: `/document/search/${type.toLowerCase()}`,
+      query: {
+        documentId: id,
+      },
+    });
   };
 
   const handlePageChange = (page: number) => {
@@ -135,7 +149,11 @@ export default function Search() {
 
       {/* data list */}
       <div className="grid mt-10">
-        <DocumentTableList headers={headers} dataList={dataList} />
+        <DocumentTableList
+          headers={headers}
+          dataList={dataList}
+          onRowClick={handleDataRowClick}
+        />
       </div>
 
       {/* pagination */}

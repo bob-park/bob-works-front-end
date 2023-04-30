@@ -1,7 +1,6 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoChevronBackSharp } from 'react-icons/io5';
-import { Button, Card, Label, Modal, TextInput } from 'flowbite-react';
-import { format } from 'date-fns';
+import { Button, Card } from 'flowbite-react';
 
 import { useRouter } from 'next/router';
 
@@ -84,21 +83,6 @@ export default function DocumentVacationApproval() {
     setShowApproval(true);
   };
 
-  const handleCapture = () => {
-    const docElement = document.getElementById('vacationDocument');
-
-    if (!docElement) {
-      return;
-    }
-
-    html2canvas(docElement).then((canvas) => {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-
-      pdf.addImage(canvas, 'JPEG', 0, 0, 210, 297);
-      pdf.save(`${vacationDocument.id}_${vacationDocument.writer.name}.pdf`);
-    });
-  };
-
   return (
     <>
       <ApprovalModal
@@ -126,7 +110,7 @@ export default function DocumentVacationApproval() {
 
           {/* buttons */}
           <div>
-            <div className="grid grid-cols-3 gap-10 mt-3">
+            <div className="grid grid-cols-2 gap-10 mt-3">
               <Button
                 outline
                 color="light"
@@ -141,7 +125,6 @@ export default function DocumentVacationApproval() {
               >
                 승인
               </Button>
-              <Button onClick={handleCapture}>캡처</Button>
             </div>
           </div>
 
