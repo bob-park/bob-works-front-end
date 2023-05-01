@@ -58,11 +58,15 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
           {lines.map((line) => (
             <td
               key={`head_${line.id}`}
-              className="w-[100px] px-3 border border-black"
+              className="w-[100px] px-3 border border-black pb-2"
             >
               {line.positionName}
             </td>
           ))}
+          <td rowSpan={2} className="w-[20px] px-3 border border-black">
+            승 인
+          </td>
+          <td className="w-[100px] px-3 border border-black pb-2">대표이사</td>
         </tr>
         <tr className="h-[80px]">
           {lines.map((line) => (
@@ -74,6 +78,7 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
               />
             </td>
           ))}
+          <td className="border border-black"></td>
         </tr>
       </tbody>
     </table>

@@ -12,11 +12,14 @@ import {
   documentApprovalReducer,
 } from './document/approval';
 
+import { USER, userReducer } from './user';
+
 const rootReducer = combineReducers({
   [AUTHENTICATION]: authenticationReducer,
   [DOCUMENT_TYPE]: documentTypeReducer,
   [DOCUMENT]: documentReducer,
   [DOCUMENT_APPROVAL]: documentApprovalReducer,
+  [USER]: userReducer,
 });
 
 function rootStore() {

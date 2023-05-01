@@ -1,14 +1,14 @@
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { Card } from 'flowbite-react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { authenticationActions } from '@/store/authentication';
 
-const { requestGetUser } = authenticationActions;
+import { userActions } from '@/store/user';
+
+const { requestGetUserVacation } = userActions;
 
 export default function Home() {
-  const router = useRouter();
-  const { user } = useAppSelector((state) => state.authentication);
+  const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const general = user?.nowVacation?.general || { totalCount: 0, usedCount: 0 };
@@ -17,7 +17,9 @@ export default function Home() {
     usedCount: 0,
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(requestGetUserVacation());
+  }, []);
 
   return (
     <div className="grid grid-cols-3 gap-4">
