@@ -1,5 +1,5 @@
 import { VacationDocument } from '@/store/document/types';
-import ApprovalLines from './ApprovalLines';
+import ApprovalLines, { ApprovalLine } from './ApprovalLines';
 import {
   formatDate,
   parseSubType,
@@ -13,21 +13,26 @@ type VacationDocumentProps = {
 export default function VacationDocument({ document }: VacationDocumentProps) {
   const { lines, writer } = document;
 
+  // TODO 현재 문서를 회사에서 사용하는 문서로 만들어야되서 이렇게 했다. 나중에 바꿔야징...
+  const dummyLines: ApprovalLine[] = lines.map((line) => ({
+    id: line.id,
+    positionName: '부 서 장',
+    status: line.status,
+    approveDate: line.approvedDateTime,
+    reason: line.reason,
+  }));
+
+  dummyLines.unshift({
+    id: 101,
+    positionName: '담 당',
+    status: 'WAITING',
+  });
+
   return (
     <div id="vacationDocument" className="h-[1344px]">
       <div className="m-20 grid grid-col-1 gap-8">
         <div className="grid w-full justify-end m-1">
-          <ApprovalLines
-            lines={lines.map((line) => {
-              return {
-                id: line.id,
-                positionName: line.positionName,
-                status: line.status,
-                approveDate: line.approvedDateTime,
-                reason: line.reason,
-              };
-            })}
-          />
+          <ApprovalLines lines={dummyLines} />
         </div>
 
         <div className="flex w-full justify-center items-center mt-16">

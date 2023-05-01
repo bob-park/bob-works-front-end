@@ -27,9 +27,15 @@ export default function VacationDocumentList() {
   useEffect(() => {
     const { documentId } = router.query;
 
+    const id = Number(documentId);
+
+    if (!id) {
+      return;
+    }
+
     disaptch(
       requestGetVacationDocument({
-        documentId: Number(documentId),
+        documentId: id,
       }),
     );
   }, []);
