@@ -3,7 +3,7 @@ import { call, all, takeLatest, fork, put, delay } from 'redux-saga/effects';
 import { get, post } from '@/utils/common';
 import { documentActions } from '.';
 import { Page } from '@/common/page';
-import { Documents, VacationDocument } from './types';
+import { DocumentLineStatus, Documents, VacationDocument } from './types';
 
 const {
   /* get documents */
@@ -58,11 +58,8 @@ function* callGetVacationDocument(
 ) {
   const { documentId } = action.payload;
 
-  const vacation: VacationDocument = yield call(
-    get,
-    `/api/document/vacation/${documentId}`,
-    null,
-  );
+  const vacation: { document: VacationDocument; lines: DocumentLineStatus[] } =
+    yield call(get, `/api/document/vacation/${documentId}`, null);
 
   yield put(successGetVacationDocument(vacation));
 }

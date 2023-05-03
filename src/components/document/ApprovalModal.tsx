@@ -15,7 +15,6 @@ export default function ApprovalModal({
   onApprove,
 }: ApprovalModalProps) {
   const [showModal, setShowModal] = useState<boolean>(show);
-
   // useEffect
   useEffect(() => {
     setShowModal(show);
@@ -28,7 +27,16 @@ export default function ApprovalModal({
 
   const handleApprove = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onApprove && onApprove(e.target.reason?.value);
+
+    const reasonInput = document.getElementById('reason') as HTMLInputElement;
+
+    let reason;
+
+    if (reasonInput) {
+      reason = reasonInput.value;
+    }
+
+    onApprove && onApprove(reason);
   };
 
   return (

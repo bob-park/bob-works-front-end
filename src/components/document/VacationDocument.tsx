@@ -108,7 +108,8 @@ export default function VacationDocument({ document }: VacationDocumentProps) {
           <div className="inline-block w-32 mr-2">신 청 자 :</div>
           <div className="tracking-wide w-48 inline-block">
             <span className="font-bold">
-              사 용 자 <span className="font-normal ml-10">(인)</span>
+              {document.writer.name}
+              <span className="font-normal ml-10">(인)</span>
             </span>
           </div>
         </div>
