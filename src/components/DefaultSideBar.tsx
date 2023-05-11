@@ -24,18 +24,19 @@ export default function DefaultSideBar({
           <div className="mt-4">
             <Avatar
               rounded
+              bordered
               size="xl"
               img={user.avatar}
-              placeholderInitials="BP"
+              placeholderInitials={user.name}
             />
           </div>
           <div className="mt-4 font-bold text-lg">{user.name}</div>
           <div className="mt-2 font-bold text-base text-gray-500">
             <span>
               {/* 부서 */}
-              {user.team.name}
+              {user.team ? user.team.name + ' - ' : ''}
             </span>
-            {' - '}
+
             <span>
               {/* 직급 */}
               {user.position?.name}
