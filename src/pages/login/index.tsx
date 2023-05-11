@@ -1,19 +1,18 @@
-import { Button } from 'flowbite-react';
-
+import { useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
+
+import LoginLoading from '@/components/loading/LoginLoading';
 
 export default function Login() {
   const router = useRouter();
 
-  const handleLogin = () => {
+  useLayoutEffect(() => {
     router.push('/api/oauth2/authorization/bob-works');
-  };
+  }, []);
 
   return (
-    <div className="flex w-1/2 justify-center items-center">
-      <Button className="w-64" onClick={handleLogin}>
-        로그인
-      </Button>
+    <div className="">
+      <LoginLoading />
     </div>
   );
 }
