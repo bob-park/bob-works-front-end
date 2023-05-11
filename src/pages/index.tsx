@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { Card } from 'flowbite-react';
@@ -8,6 +8,7 @@ import { userActions } from '@/store/user';
 const { requestGetUserVacation } = userActions;
 
 export default function Home() {
+  const { isLoggedIn } = useAppSelector((state) => state.authentication);
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -17,9 +18,9 @@ export default function Home() {
     usedCount: 0,
   };
 
-  useEffect(() => {
-    dispatch(requestGetUserVacation());
-  }, []);
+  useLayoutEffect(() => {
+    isLoggedIn && dispatch(requestGetUserVacation());
+  }, [isLoggedIn]);
 
   return (
     <div className="grid grid-cols-3 gap-4">

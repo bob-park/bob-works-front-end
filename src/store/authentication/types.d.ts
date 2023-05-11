@@ -33,4 +33,5 @@ type User = {
 type AuthenticationState = {
   user?: User;
   isLoading: boolean;
+  isLoggedIn: boolean;
 };
