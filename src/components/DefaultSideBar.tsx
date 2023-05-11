@@ -22,7 +22,12 @@ export default function DefaultSideBar({
         {/* Avatar */}
         <div className="justify-start p-10">
           <div className="mt-4">
-            <Avatar rounded size="lg" placeholderInitials="BP" />
+            <Avatar
+              rounded
+              size="xl"
+              img={user.avatar}
+              placeholderInitials="BP"
+            />
           </div>
           <div className="mt-4 font-bold text-lg">{user.name}</div>
           <div className="mt-2 font-bold text-base text-gray-500">

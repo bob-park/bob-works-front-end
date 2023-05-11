@@ -21,6 +21,7 @@ type User = {
   name: string;
   position?: Position;
   team: Team;
+  avatar?: string;
   nowVacation?: {
     id: number;
     year: number;
