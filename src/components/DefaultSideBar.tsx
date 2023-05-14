@@ -1,6 +1,8 @@
 import { HiChartPie, HiDocument } from 'react-icons/hi';
 import { IoIosLogOut } from 'react-icons/io';
-import { Avatar, Sidebar } from 'flowbite-react';
+import { IoSettingsSharp } from 'react-icons/io5';
+
+import { Avatar, Button, Sidebar } from 'flowbite-react';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -21,14 +23,16 @@ export default function DefaultSideBar({
       <div className="h-full">
         {/* Avatar */}
         <div className="justify-start p-10">
-          <div className="mt-4">
-            <Avatar
-              rounded
-              bordered
-              size="xl"
-              img={user.avatar}
-              placeholderInitials={user.name}
-            />
+          <div className="relative mt-4 h-[160px]">
+            <div>
+              <Avatar
+                rounded
+                bordered
+                size="xl"
+                img={user.avatar}
+                placeholderInitials={user.name}
+              />
+            </div>
           </div>
           <div className="mt-4 font-bold text-lg">{user.name}</div>
           <div className="mt-2 font-bold text-base text-gray-500">
@@ -55,6 +59,15 @@ export default function DefaultSideBar({
                 >
                   <Link className="block w-full" href="/">
                     대시보드
+                  </Link>
+                </Sidebar.Item>
+                <Sidebar.Item
+                  icon={IoSettingsSharp}
+                  as="div"
+                  active={router.pathname == '/settings'}
+                >
+                  <Link className="block w-full" href="/settings">
+                    설정
                   </Link>
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
