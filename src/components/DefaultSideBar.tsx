@@ -61,15 +61,6 @@ export default function DefaultSideBar({
                     대시보드
                   </Link>
                 </Sidebar.Item>
-                <Sidebar.Item
-                  icon={IoSettingsSharp}
-                  as="div"
-                  active={router.pathname == '/settings'}
-                >
-                  <Link className="block w-full" href="/settings">
-                    설정
-                  </Link>
-                </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
                 <Sidebar.Collapse icon={HiDocument} label="결제" open>
@@ -115,6 +106,15 @@ export default function DefaultSideBar({
             <Sidebar aria-label="Sidebar with content separator example">
               <Sidebar.Items>
                 <Sidebar.ItemGroup>
+                  <Sidebar.Item
+                    icon={IoSettingsSharp}
+                    as="div"
+                    active={router.pathname == '/settings'}
+                  >
+                    <Link className="block w-full" href="/settings">
+                      설정
+                    </Link>
+                  </Sidebar.Item>
                   <Sidebar.Item icon={IoIosLogOut}>
                     <Link className="block w-full" href="/api/logout">
                       로그아웃
