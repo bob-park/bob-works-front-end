@@ -78,7 +78,12 @@ export default function VacationDocument({ document }: VacationDocumentProps) {
             휴 가 구 분 :
           </div>
           <span className="ml-10 text-xl font-medium">
-            <span>{parseType(document.vacationType)}</span>
+            <span>
+              {parseType(
+                document.vacationType,
+                document.vacationSubType != null,
+              )}
+            </span>
             {document.vacationSubType && (
               <span className="ml-4">
                 ( {parseSubType(document.vacationSubType)} )

@@ -4,11 +4,11 @@ import { format } from 'date-fns';
 const vacationTypes: DocumentCondtionSelect[] = [
   {
     id: 'GENERAL',
-    name: '연차',
+    name: '연 차',
   },
   {
     id: 'ALTERNATIVE',
-    name: '대체휴가',
+    name: '대 체 휴 가',
   },
 ];
 
@@ -27,7 +27,11 @@ export function formatDate(date: Date, str: string = 'yyyy. MM. dd.') {
   return format(new Date(date), str);
 }
 
-export function parseType(id: VacationType) {
+export function parseType(id: VacationType, isHalf: boolean) {
+  if (isHalf) {
+    return '반 차';
+  }
+
   return vacationTypes.find((item) => item.id == id)?.name;
 }
 
