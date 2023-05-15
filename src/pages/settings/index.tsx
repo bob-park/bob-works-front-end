@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, useLayoutEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import {
   Avatar,
@@ -9,12 +15,13 @@ import {
   Spinner,
   TextInput,
 } from 'flowbite-react';
+import { useRouter } from 'next/router';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { userActions } from '@/store/user';
 
-const { requestUpdatePassword } = userActions;
+const { requestUpdatePassword, requestUpdateAvatar } = userActions;
 
 type PasswordVisibleToggleProps = {
   toggle: boolean;
@@ -41,6 +48,8 @@ const PasswordVisibleToggle = ({
 };
 
 export default function Settings() {
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.authentication);
   const { isLoading } = useAppSelector((state) => state.user);
@@ -59,6 +68,10 @@ export default function Settings() {
   useLayoutEffect(() => {
     setIsMatchPassword(updatePassword === updateRepeatPassword);
   }, [updatePassword, updateRepeatPassword]);
+
+  useEffect(() => {
+    console.log(avatarFile);
+  }, [avatarFile]);
 
   const handleChangeAvatarFile = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -91,6 +104,23 @@ export default function Settings() {
 
   const handleChangeAvatar = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    if (!avatarFile) {
+      return;
+    }
+
+    formData.append('avatar', avatarFile);
+
+    dispatch(
+      requestUpdateAvatar({
+        formData,
+        handleSuccess: () => {
+          router.reload();
+        },
+      }),
+    );
   };
 
   return (

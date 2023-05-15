@@ -15,6 +15,14 @@ const reducers = {
     state.user = action.payload;
     state.isLoading = false;
   },
+  // update user avatar
+  requestUpdateAvatar: (
+    state: UserState,
+    action: PayloadAction<{ formData: FormData; handleSuccess: () => void }>,
+  ) => {},
+  successUpdateAvatar: (state: UserState, action: PayloadAction<User>) => {
+    state.user = action.payload;
+  },
 };
 
 export default reducers;
