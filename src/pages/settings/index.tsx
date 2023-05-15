@@ -6,10 +6,15 @@ import {
   Card,
   FileInput,
   Label,
+  Spinner,
   TextInput,
 } from 'flowbite-react';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
+
+import { userActions } from '@/store/user';
+
+const { requestUpdatePassword } = userActions;
 
 type PasswordVisibleToggleProps = {
   toggle: boolean;
@@ -36,14 +41,24 @@ const PasswordVisibleToggle = ({
 };
 
 export default function Settings() {
-  const { isLoading, user } = useAppSelector((state) => state.authentication);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.authentication);
+  const { isLoading } = useAppSelector((state) => state.user);
 
+  const [updatePassword, setUpdatePassword] = useState<string>('');
+  const [updateRepeatPassword, setUpdateRepeatPassword] = useState<string>('');
+  const [isMatchPassword, setIsMatchPassword] = useState<boolean>(true);
   const [showPassword, setPassword] = useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState<boolean>(false);
   const [avatarSousrce, setAvatarSource] = useState<string | undefined>(
     user?.avatar,
   );
   const [avatarFile, setAvatarFile] = useState<File>();
+
+  // useEffect
+  useLayoutEffect(() => {
+    setIsMatchPassword(updatePassword === updateRepeatPassword);
+  }, [updatePassword, updateRepeatPassword]);
 
   const handleChangeAvatarFile = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -58,6 +73,20 @@ export default function Settings() {
 
   const handleChangePassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!updatePassword) {
+      return;
+    }
+
+    dispatch(
+      requestUpdatePassword({
+        password: updatePassword,
+        handleSuccess: () => {
+          setUpdatePassword('');
+          setUpdateRepeatPassword('');
+        },
+      }),
+    );
   };
 
   const handleChangeAvatar = (e: FormEvent<HTMLFormElement>) => {
@@ -92,6 +121,8 @@ export default function Settings() {
                 }
                 placeholder="password"
                 required={true}
+                value={updatePassword}
+                onChange={(e) => setUpdatePassword(e.target.value)}
               />
             </div>
 
@@ -110,9 +141,32 @@ export default function Settings() {
                     onToggle={(toggle) => setShowRepeatPassword(toggle)}
                   />
                 }
+                value={updateRepeatPassword}
+                color={isMatchPassword ? 'gray' : 'failure'}
+                helperText={
+                  !isMatchPassword && (
+                    <span className="font-medium">
+                      패스워드가 서로 다릅니다.
+                    </span>
+                  )
+                }
+                onChange={(e) => setUpdateRepeatPassword(e.target.value)}
               />
             </div>
-            <Button type="submit">변경</Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Spinner
+                    className="mr-2 h-5 w-5"
+                    color="info"
+                    aria-label="Info spinner example"
+                  />
+                  변경중
+                </>
+              ) : (
+                '변경'
+              )}
+            </Button>
           </form>
         </Card>
         <Card>
