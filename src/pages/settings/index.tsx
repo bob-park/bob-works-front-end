@@ -87,7 +87,7 @@ export default function Settings() {
   const handleChangePassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!updatePassword) {
+    if (!updatePassword || !isMatchPassword) {
       return;
     }
 
