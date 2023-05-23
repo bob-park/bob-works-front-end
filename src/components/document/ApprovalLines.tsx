@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 
 export type ApprovalLine = {
   id: number;
+  uniqueUserId?: number;
   positionName: string;
   status: DocumentsStatus;
   approveDate?: Date;
@@ -17,10 +18,12 @@ type ApprovalLinesProps = {
 };
 
 const Stamp = ({
+  userId,
   status,
   approveDate,
   reason,
 }: {
+  userId?: number;
   status?: DocumentsStatus;
   approveDate?: Date;
   reason?: string;
@@ -40,7 +43,7 @@ const Stamp = ({
         }
         placement="bottom"
       >
-        {status === 'APPROVE' && <ApproveStamp />}
+        {status === 'APPROVE' && <ApproveStamp userId={userId} />}
         {status === 'REJECT' && <RejectStamp />}
       </Tooltip>
     </div>
@@ -72,6 +75,7 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
           {lines.map((line) => (
             <td key={`body_${line.id}`} className="border border-black">
               <Stamp
+                userId={line.uniqueUserId}
                 status={line.status}
                 approveDate={line.approveDate}
                 reason={line.reason}

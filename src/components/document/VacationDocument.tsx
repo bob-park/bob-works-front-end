@@ -16,6 +16,7 @@ export default function VacationDocument({ document }: VacationDocumentProps) {
   // TODO 현재 문서를 회사에서 사용하는 문서로 만들어야되서 이렇게 했다. 나중에 바꿔야징...
   const dummyLines: ApprovalLine[] = lines.map((line) => ({
     id: line.id,
+    uniqueUserId: line.uniqueUserId,
     positionName: '부 서 장',
     status: line.status,
     approveDate: line.approvedDateTime,
@@ -24,8 +25,10 @@ export default function VacationDocument({ document }: VacationDocumentProps) {
 
   dummyLines.unshift({
     id: 101,
+    uniqueUserId: writer.id,
     positionName: '담 당',
-    status: 'WAITING',
+    status: 'APPROVE',
+    approveDate: document.createdDate,
   });
 
   return (
@@ -112,10 +115,19 @@ export default function VacationDocument({ document }: VacationDocumentProps) {
         <div className="text-right text-xl tracking-widest">
           <div className="inline-block w-32 mr-2">신 청 자 :</div>
           <div className="tracking-wide w-48 inline-block">
-            <span className="font-bold">
+            <span className="font-bold tracking-widest">
               {document.writer.name}
+
               <span className="font-normal ml-10">(인)</span>
             </span>
+          </div>
+          <div className="relative w-full">
+            <div className="absolute right-[-30px] bottom-[-15px] w-24">
+              <img
+                alt="signature"
+                src={`/api/user/${document.writer.id}/document/signature`}
+              />
+            </div>
           </div>
         </div>
       </div>

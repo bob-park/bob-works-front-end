@@ -33,6 +33,7 @@ type AddVacationRequest = {
 
 type DocumentLineStatus = {
   id: number;
+  uniqueUserId: number;
   userId: string;
   username: string;
   positionId: number;
