@@ -14,7 +14,7 @@ const DefaultSignature = () => {
 
 export default function ApproveStamp({ userId }: ApproveStampProps) {
   return (
-    <div className="grid justify-center items-center ">
+    <div className="grid justify-center items-center w-[100px]">
       {userId ? (
         <img alt="signature" src={`/api/user/${userId}/document/signature`} />
       ) : (

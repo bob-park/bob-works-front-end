@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button, Card } from 'flowbite-react';
 import { IoChevronBackSharp } from 'react-icons/io5';
-import { FiDownload } from 'react-icons/fi';
+import { FiDownload, FiPrinter } from 'react-icons/fi';
 
 import { useRouter } from 'next/router';
 
@@ -22,6 +22,9 @@ export default function VacationDocumentList() {
   // redux
   const disaptch = useAppDispatch();
   const { vacationDocument } = useAppSelector((state) => state.document);
+
+  // useRef
+  const printRef = useRef<any>(null);
 
   // useEffect
   useEffect(() => {
@@ -64,6 +67,23 @@ export default function VacationDocumentList() {
     });
   };
 
+  const handlePrint = () => {
+    // const html = document.querySelector('html');
+    // const printContents =
+    //   document.getElementById('vacationDocument')?.innerHTML;
+    // if (!printContents) {
+    //   return;
+    // }
+    // const printDiv = document.createElement('div');
+    // printDiv.className = 'print-div';
+    // html?.appendChild(printDiv);
+    // printDiv.innerHTML = printContents;
+    // document.body.style.display = 'none';
+    // window.print();
+    // document.body.style.display = 'block';
+    // printDiv.style.display = 'none';
+  };
+
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-1">
@@ -86,16 +106,19 @@ export default function VacationDocumentList() {
         <div>
           <div className="grid grid-cols-3 gap-10 mt-3 justify-end">
             <div></div>
-            <div></div>
             <Button onClick={handleCapture}>
               <FiDownload className="mr-2 h-5 w-5" />
               PDF 다운로드
+            </Button>
+
+            <Button color="dark" onClick={handlePrint}>
+              <FiPrinter className="mr-2 h-5 w-5" />인 쇄
             </Button>
           </div>
         </div>
 
         {/* contents */}
-        <Card className="mt-4">
+        <Card className="mt-4" ref={printRef}>
           <VacationDocument document={vacationDocument} />
         </Card>
       </div>
