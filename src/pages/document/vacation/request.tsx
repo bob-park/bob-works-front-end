@@ -76,7 +76,7 @@ export default function VacationDocumentRequest() {
     endDate: new Date(),
   });
 
-  const [reason, setReason] = useState<string>('');
+  const [reason, setReason] = useState<string>('개인 사유');
 
   useEffect(() => {
     dispatch(requestGetTypes());
