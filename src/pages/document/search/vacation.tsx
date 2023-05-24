@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Button, Card } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { Button, Card, Spinner } from 'flowbite-react';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { FiDownload, FiPrinter } from 'react-icons/fi';
 
@@ -23,8 +23,8 @@ export default function VacationDocumentList() {
   const disaptch = useAppDispatch();
   const { vacationDocument } = useAppSelector((state) => state.document);
 
-  // useRef
-  const printRef = useRef<any>(null);
+  // useState
+  const [isPrinting, setIsPrinting] = useState<boolean>(false);
 
   // useEffect
   useEffect(() => {
@@ -54,14 +54,11 @@ export default function VacationDocumentList() {
 
   const handleCapture = () => {
     const docElement = document.getElementById('vacationDocument');
-
     if (!docElement) {
       return;
     }
-
     html2canvas(docElement).then((canvas) => {
       const pdf = new jsPDF('p', 'mm', 'a4');
-
       pdf.addImage(canvas, 'JPEG', 0, 0, 210, 297);
       pdf.save(`${vacationDocument.id}_${vacationDocument.writer.name}.pdf`);
     });
@@ -112,13 +109,27 @@ export default function VacationDocumentList() {
             </Button>
 
             <Button color="dark" onClick={handlePrint}>
-              <FiPrinter className="mr-2 h-5 w-5" />인 쇄
+              {isPrinting ? (
+                <>
+                  <Spinner
+                    className="mr-2 h-5 w-5"
+                    color="info"
+                    aria-label="Info spinner example"
+                  />
+                  인쇄중
+                </>
+              ) : (
+                <>
+                  <FiPrinter className="mr-2 h-5 w-5" size="" />
+                  인쇄
+                </>
+              )}
             </Button>
           </div>
         </div>
 
         {/* contents */}
-        <Card className="mt-4" ref={printRef}>
+        <Card className="mt-4">
           <VacationDocument document={vacationDocument} />
         </Card>
       </div>
