@@ -14,6 +14,9 @@ const {
   // update user avatar
   requestUpdateAvatar,
   successUpdateAvatar,
+  //update signature
+  requestUpdateSignature,
+  successUpdateSignature,
 } = userActions;
 
 // get user vacation
@@ -59,10 +62,32 @@ function* watchRequestUpdateAvatar() {
   yield takeLatest(requestUpdateAvatar, callUpdateAvatar);
 }
 
+// update signature
+function* callUpdateSignature(
+  action: ReturnType<typeof requestUpdateSignature>,
+) {
+  const { formData, handleSuccess, userId } = action.payload;
+
+  const user: User = yield call(
+    post,
+    `/api/user/${userId}/document/signature`,
+    formData,
+  );
+
+  yield put(successUpdateSignature(user));
+
+  handleSuccess && handleSuccess();
+}
+
+function* watchRequestUpdateSignature() {
+  yield takeLatest(requestUpdateSignature, callUpdateSignature);
+}
+
 export default function* userSagas() {
   yield all([
     fork(watchRequestGetUserVacation),
     fork(watchRequestUpdatePassword),
     fork(watchRequestUpdateAvatar),
+    fork(watchRequestUpdateSignature),
   ]);
 }

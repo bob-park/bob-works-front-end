@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   FormEvent,
+  SyntheticEvent,
   useEffect,
   useLayoutEffect,
   useState,
@@ -21,7 +22,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { userActions } from '@/store/user';
 
-const { requestUpdatePassword, requestUpdateAvatar } = userActions;
+const { requestUpdatePassword, requestUpdateAvatar, requestUpdateSignature } =
+  userActions;
 
 type PasswordVisibleToggleProps = {
   toggle: boolean;
@@ -59,19 +61,19 @@ export default function Settings() {
   const [isMatchPassword, setIsMatchPassword] = useState<boolean>(true);
   const [showPassword, setPassword] = useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState<boolean>(false);
-  const [avatarSousrce, setAvatarSource] = useState<string | undefined>(
+  const [avatarSource, setAvatarSource] = useState<string | undefined>(
     user?.avatar,
   );
   const [avatarFile, setAvatarFile] = useState<File>();
+  const [signatureSource, setSignatureSource] = useState<string>(
+    `/api/user/${user?.id}/document/signature`,
+  );
+  const [signatureFile, setSignatureFile] = useState<File>();
 
   // useEffect
   useLayoutEffect(() => {
     setIsMatchPassword(updatePassword === updateRepeatPassword);
   }, [updatePassword, updateRepeatPassword]);
-
-  useEffect(() => {
-    console.log(avatarFile);
-  }, [avatarFile]);
 
   const handleChangeAvatarFile = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -115,6 +117,44 @@ export default function Settings() {
 
     dispatch(
       requestUpdateAvatar({
+        formData,
+        handleSuccess: () => {
+          router.reload();
+        },
+      }),
+    );
+  };
+
+  // update signature
+  const handleChangeSignatureFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files) {
+      return;
+    }
+    const file = files[0];
+    setSignatureSource(URL.createObjectURL(file));
+    setSignatureFile(file);
+  };
+
+  const handleChangeSignature = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!user) {
+      return;
+    }
+
+    const formData = new FormData();
+
+    if (!signatureFile) {
+      return;
+    }
+
+    formData.append('signature', signatureFile);
+
+    dispatch(
+      requestUpdateSignature({
+        userId: user.id,
         formData,
         handleSuccess: () => {
           router.reload();
@@ -201,7 +241,7 @@ export default function Settings() {
         </Card>
         <Card>
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            아바타 설정
+            Avatar 설정
           </h5>
 
           <form
@@ -213,7 +253,7 @@ export default function Settings() {
                 rounded
                 bordered
                 size="xl"
-                img={avatarSousrce}
+                img={avatarSource}
                 placeholderInitials={user?.name}
               />
 
@@ -227,6 +267,43 @@ export default function Settings() {
                   accept=".jpg, .png"
                   required
                   onChange={handleChangeAvatarFile}
+                />
+              </div>
+            </div>
+
+            <Button type="submit">변경</Button>
+          </form>
+        </Card>
+        <Card>
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            결제 사인 설정
+          </h5>
+
+          <form
+            className="flex flex-col gap-6 m-3"
+            onSubmit={handleChangeSignature}
+          >
+            <div>
+              <div className="flex justify-center border-solid max-h-32">
+                <img
+                  className="max-h-32"
+                  src={signatureSource}
+                  onError={(e: SyntheticEvent<HTMLImageElement>) =>
+                    (e.currentTarget.src = '')
+                  }
+                />
+              </div>
+
+              <div id="fileUpload">
+                <div className="mb-2 block">
+                  <Label htmlFor="signature" value="결제 사인" />
+                </div>
+                <FileInput
+                  id="signature"
+                  helperText="결제 사인 파일을 업로드해주세요. (jpg, png 파일만 업로드 가능합니다.)"
+                  accept=".jpg, .png"
+                  required
+                  onChange={handleChangeSignatureFile}
                 />
               </div>
             </div>

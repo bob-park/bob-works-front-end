@@ -23,6 +23,18 @@ const reducers = {
   successUpdateAvatar: (state: UserState, action: PayloadAction<User>) => {
     state.user = action.payload;
   },
+  // update signature
+  requestUpdateSignature: (
+    state: UserState,
+    action: PayloadAction<{
+      userId: number;
+      formData: FormData;
+      handleSuccess: () => void;
+    }>,
+  ) => {},
+  successUpdateSignature: (state: UserState, action: PayloadAction<User>) => {
+    state.user = action.payload;
+  },
 };
 
 export default reducers;
