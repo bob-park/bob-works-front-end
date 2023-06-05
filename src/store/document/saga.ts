@@ -1,6 +1,6 @@
 import { call, all, takeLatest, fork, put, delay } from 'redux-saga/effects';
 
-import { get, post } from '@/utils/common';
+import { get, post, deleteCall } from '@/utils/common';
 import { documentActions } from '.';
 import { Page } from '@/common/page';
 import { DocumentLineStatus, Documents, VacationDocument } from './types';
@@ -15,6 +15,9 @@ const {
   /** get vacation document */
   requestGetVacationDocument,
   successGetVacationDocument,
+  // cancel document
+  requestCancelDocument,
+  successCancelDocument,
 } = documentActions;
 
 /* get documents */
@@ -68,10 +71,27 @@ function* watchGetVacationDocument() {
   yield takeLatest(requestGetVacationDocument, callGetVacationDocument);
 }
 
+// cancel document
+function* callCancelDocument(action: ReturnType<typeof requestCancelDocument>) {
+  const { documentId } = action.payload;
+
+  const document: Documents = yield call(
+    deleteCall,
+    `/api/document/${documentId}/cancel`,
+  );
+
+  yield put(successCancelDocument(document));
+}
+
+function* watchCancelDocument() {
+  yield takeLatest(requestCancelDocument, callCancelDocument);
+}
+
 export default function* authencationSagas() {
   yield all([
     fork(watchGetDocuments),
     fork(watchAddVacation),
     fork(watchGetVacationDocument),
+    fork(watchCancelDocument),
   ]);
 }

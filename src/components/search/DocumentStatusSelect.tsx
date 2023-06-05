@@ -28,6 +28,10 @@ const statuses: DocumentCondtionSelect[] = [
     id: 'REJECT',
     name: '반려',
   },
+  {
+    id: 'CANCEL',
+    name: '취소',
+  },
 ];
 
 export function parseStatus(status: DocumentConditionStatus) {

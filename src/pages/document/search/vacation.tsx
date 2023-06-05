@@ -64,22 +64,7 @@ export default function VacationDocumentList() {
     });
   };
 
-  const handlePrint = () => {
-    // const html = document.querySelector('html');
-    // const printContents =
-    //   document.getElementById('vacationDocument')?.innerHTML;
-    // if (!printContents) {
-    //   return;
-    // }
-    // const printDiv = document.createElement('div');
-    // printDiv.className = 'print-div';
-    // html?.appendChild(printDiv);
-    // printDiv.innerHTML = printContents;
-    // document.body.style.display = 'none';
-    // window.print();
-    // document.body.style.display = 'block';
-    // printDiv.style.display = 'none';
-  };
+  const handlePrint = () => {};
 
   return (
     <div className="w-full h-full">

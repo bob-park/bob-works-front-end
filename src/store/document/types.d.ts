@@ -1,6 +1,11 @@
 import { Page } from '@/common/page';
 
-type DocumentsStatus = 'WAITING' | 'PROCEEDING' | 'APPROVE' | 'REJECT';
+type DocumentsStatus =
+  | 'WAITING'
+  | 'PROCEEDING'
+  | 'APPROVE'
+  | 'REJECT'
+  | 'CANCEL';
 
 type Documents = {
   id: number;

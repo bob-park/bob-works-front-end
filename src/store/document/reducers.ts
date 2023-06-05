@@ -57,6 +57,19 @@ const reducers = {
     state.vacationDocument = document;
     state.vacationDocument.lines = lines;
   },
+  // cancel document
+  requestCancelDocument: (
+    state: DocumentsState,
+    action: PayloadAction<{ documentId: number }>,
+  ) => {
+    state.isLoading = true;
+  },
+  successCancelDocument: (
+    state: DocumentsState,
+    action: PayloadAction<Documents>,
+  ) => {
+    state.isLoading = false;
+  },
 };
 
 export default reducers;
