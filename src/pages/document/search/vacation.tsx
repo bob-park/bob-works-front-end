@@ -74,7 +74,14 @@ export default function VacationDocumentList() {
       return;
     }
 
-    disaptch(requestCancelDocument({ documentId: Number(documentId) }));
+    disaptch(
+      requestCancelDocument({
+        documentId: Number(documentId),
+        handleAfter: () => {
+          router.push('/document/search');
+        },
+      }),
+    );
   };
 
   return (

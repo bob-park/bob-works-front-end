@@ -73,7 +73,7 @@ function* watchGetVacationDocument() {
 
 // cancel document
 function* callCancelDocument(action: ReturnType<typeof requestCancelDocument>) {
-  const { documentId } = action.payload;
+  const { documentId, handleAfter } = action.payload;
 
   const document: Documents = yield call(
     deleteCall,
@@ -81,6 +81,8 @@ function* callCancelDocument(action: ReturnType<typeof requestCancelDocument>) {
   );
 
   yield put(successCancelDocument(document));
+
+  handleAfter && handleAfter();
 }
 
 function* watchCancelDocument() {

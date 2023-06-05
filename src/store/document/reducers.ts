@@ -60,7 +60,7 @@ const reducers = {
   // cancel document
   requestCancelDocument: (
     state: DocumentsState,
-    action: PayloadAction<{ documentId: number }>,
+    action: PayloadAction<{ documentId: number; handleAfter?: () => void }>,
   ) => {
     state.isLoading = true;
   },
