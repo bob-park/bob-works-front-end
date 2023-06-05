@@ -35,3 +35,12 @@ export function putCall<B, R>(url: string, body: B) {
 
   return result;
 }
+
+export function deleteCall<B, R>(url: string) {
+  const result = client
+    .delete(url)
+    .then((res: AxiosResponse<R>) => res.data)
+    .catch((err) => console.error(err));
+
+  return result;
+}
