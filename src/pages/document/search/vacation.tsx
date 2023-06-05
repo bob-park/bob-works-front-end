@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Card, Spinner } from 'flowbite-react';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { FiDownload, FiPrinter } from 'react-icons/fi';
+import { MdOutlineCancel } from 'react-icons/md';
 
 import { useRouter } from 'next/router';
 
@@ -13,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 import { documentActions } from '@/store/document';
 import { VacationDocument } from '@/components/document';
 
-const { requestGetVacationDocument } = documentActions;
+const { requestGetVacationDocument, requestCancelDocument } = documentActions;
 
 export default function VacationDocumentList() {
   // router
@@ -66,6 +67,16 @@ export default function VacationDocumentList() {
 
   const handlePrint = () => {};
 
+  const handleCancel = () => {
+    const { documentId } = router.query;
+
+    if (!documentId) {
+      return;
+    }
+
+    disaptch(requestCancelDocument({ documentId: Number(documentId) }));
+  };
+
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-1">
@@ -87,13 +98,7 @@ export default function VacationDocumentList() {
         {/* buttons */}
         <div>
           <div className="grid grid-cols-3 gap-10 mt-3 justify-end">
-            <div></div>
-            <Button onClick={handleCapture}>
-              <FiDownload className="mr-2 h-5 w-5" />
-              PDF 다운로드
-            </Button>
-
-            <Button color="dark" onClick={handlePrint}>
+            <Button color="dark" onClick={handlePrint} disabled>
               {isPrinting ? (
                 <>
                   <Spinner
@@ -110,11 +115,38 @@ export default function VacationDocumentList() {
                 </>
               )}
             </Button>
+
+            <Button
+              onClick={handleCapture}
+              disabled={vacationDocument.status === 'CANCEL'}
+            >
+              <FiDownload className="mr-2 h-5 w-5" />
+              PDF 다운로드
+            </Button>
+
+            <Button
+              onClick={handleCancel}
+              color="failure"
+              disabled={vacationDocument.status === 'CANCEL'}
+            >
+              <MdOutlineCancel className="mr-2 h-5 w-5" />
+              취소
+            </Button>
           </div>
         </div>
 
         {/* contents */}
-        <Card className="mt-4">
+        <Card className="mt-4 relative">
+          {vacationDocument.status === 'CANCEL' && (
+            <div className="absolute top-0 bottom-0 w-full h-ful">
+              <div className="grid place-content-center w-full h-full opacity-50">
+                <div className="text-red-700 font-black text-9xl tracking-widest -rotate-45 border-8 border-solid border-red-700 rounded p-10">
+                  취 소
+                </div>
+              </div>
+            </div>
+          )}
+
           <VacationDocument document={vacationDocument} />
         </Card>
       </div>
