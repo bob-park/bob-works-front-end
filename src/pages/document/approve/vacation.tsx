@@ -129,7 +129,16 @@ export default function DocumentVacationApproval() {
           </div>
 
           {/* contents */}
-          <Card className="mt-4">
+          <Card className="mt-4 relative">
+            {approval?.status === 'CANCEL' && (
+              <div className="absolute top-0 bottom-0 w-full h-ful">
+                <div className="grid place-content-center w-full h-full opacity-50">
+                  <div className="text-red-700 font-black text-9xl tracking-widest -rotate-45 border-8 border-solid border-red-700 rounded p-10">
+                    취 소
+                  </div>
+                </div>
+              </div>
+            )}
             <VacationDocument document={vacationDocument} />
           </Card>
         </div>
