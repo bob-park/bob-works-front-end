@@ -276,7 +276,7 @@ export default function Settings() {
         </Card>
         <Card>
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            결제 사인 설정
+            결재 사인 설정
           </h5>
 
           <form
@@ -296,11 +296,11 @@ export default function Settings() {
 
               <div id="fileUpload">
                 <div className="mb-2 block">
-                  <Label htmlFor="signature" value="결제 사인" />
+                  <Label htmlFor="signature" value="결재 사인" />
                 </div>
                 <FileInput
                   id="signature"
-                  helperText="결제 사인 파일을 업로드해주세요. (jpg, png 파일만 업로드 가능합니다.)"
+                  helperText="배경이 없는 결재 사인 파일을 업로드해주세요. (jpg, png 파일만 업로드 가능합니다.)"
                   accept=".jpg, .png"
                   required
                   onChange={handleChangeSignatureFile}

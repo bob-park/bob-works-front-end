@@ -59,7 +59,7 @@ export default function ApprovalLines({ lines }: ApprovalLinesProps) {
             rowSpan={2}
             className="w-[20px] px-3 border-r border-solid border-black"
           >
-            결 제
+            결 재
           </td>
           {lines.map((line) => (
             <td

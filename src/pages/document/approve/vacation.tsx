@@ -105,7 +105,7 @@ export default function DocumentVacationApproval() {
               </Button>
             </div>
 
-            <span className="text-xl font-semibold ml-2">결제</span>
+            <span className="text-xl font-semibold ml-2">결재</span>
           </div>
 
           {/* buttons */}

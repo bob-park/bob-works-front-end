@@ -169,11 +169,6 @@ export default function VacationDocumentList() {
       >
         <form onSubmit={handleCancel}>
           <Modal.Header>취소 할꺼야?</Modal.Header>
-          {/* <Modal.Body>
-            <div>
-              <h2 className="text-xl font-semibold ml-2">취소 할꺼야?</h2>
-            </div>
-          </Modal.Body> */}
           <Modal.Footer className="">
             <div className="grid grid-cols-2 gap-2 justify-end items-end w-full">
               <Button color="gray" onClick={() => setShowConfirmCancel(false)}>

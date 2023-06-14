@@ -34,7 +34,7 @@ const defaultCondition: ApproveSearchCondition = {
 const headers = [
   {
     id: 'id',
-    value: '결제 번호',
+    value: '결재 번호',
   },
   {
     id: 'documentType',
@@ -42,11 +42,11 @@ const headers = [
   },
   {
     id: 'writerId',
-    value: '결제 요청자',
+    value: '결재 요청자',
   },
   {
     id: 'status',
-    value: '결제 상태',
+    value: '결재 상태',
     parse: (input: DocumentConditionStatus) => parseStatus(input),
   },
   {
@@ -55,7 +55,7 @@ const headers = [
   },
   {
     id: 'approvedDateTime',
-    value: '결제일',
+    value: '결재일',
     parse: (input: Date) => format(new Date(input), 'yyyy-MM-dd hh:mm:ss'),
   },
 ];
