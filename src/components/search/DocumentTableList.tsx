@@ -34,9 +34,9 @@ export default function DocumentTableList({
       </Table.Head>
       <Table.Body className="divide-y">
         {dataList?.map((data: any) => (
-          <Table.Row key={data.id} onClick={() => handleRowClick(data.id)}>
+          <Table.Row key={data.id} onClick={(e) => handleRowClick(data.id)}>
             <Table.HeadCell className="!p-4">
-              <Checkbox />
+              <Checkbox onClick={(e) => e.stopPropagation()} />
             </Table.HeadCell>
             {headers.map((header) => (
               <Table.Cell key={`${header.id}_${data.id}`}>
