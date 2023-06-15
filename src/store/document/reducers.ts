@@ -10,6 +10,7 @@ import {
 } from './types';
 
 const reducers = {
+  // get documents
   requestGetDocuments: (
     state: DocumentsState,
     action: PayloadAction<any | Pageable>,
@@ -23,6 +24,10 @@ const reducers = {
     state.isLoading = false;
     state.documents = action.payload;
   },
+  failureGetDocuments: (state: DocumentsState) => {
+    state.isLoading = false;
+  },
+  // add vacation
   requestAddVacation: (
     state: DocumentsState,
     action: PayloadAction<{
@@ -37,6 +42,9 @@ const reducers = {
     action: PayloadAction<Documents>,
   ) => {
     state.isLoading = true;
+  },
+  failureAddVacation: (state: DocumentsState) => {
+    state.isLoading = false;
   },
   // get vacation document
   requestGetVacationDocument: (
@@ -57,6 +65,9 @@ const reducers = {
     state.vacationDocument = document;
     state.vacationDocument.lines = lines;
   },
+  failureGetVacationDocument: (state: DocumentsState) => {
+    state.vacationDocument = null;
+  },
   // cancel document
   requestCancelDocument: (
     state: DocumentsState,
@@ -68,6 +79,9 @@ const reducers = {
     state: DocumentsState,
     action: PayloadAction<Documents>,
   ) => {
+    state.isLoading = false;
+  },
+  failureCancelDocumen: (state: DocumentsState) => {
     state.isLoading = false;
   },
 };

@@ -12,6 +12,9 @@ const reducers = {
     state.isLoading = false;
     state.types = action.payload;
   },
+  failureGetTypes: (state: DocumentsTypeState) => {
+    state.isLoading = false;
+  },
 };
 
 export default reducers;

@@ -4,32 +4,46 @@ import { get, post, deleteCall } from '@/utils/common';
 import { documentActions } from '.';
 import { Page } from '@/common/page';
 import { DocumentLineStatus, Documents, VacationDocument } from './types';
+import { authenticationActions } from '@/store/authentication';
 
+const { removeAuthentication } = authenticationActions;
 const {
   /* get documents */
   requestGetDocuments,
   successGetDocuments,
+  failureGetDocuments,
   /* add vacation documents */
   requestAddVacation,
   successAddVacation,
+  failureAddVacation,
   /** get vacation document */
   requestGetVacationDocument,
   successGetVacationDocument,
+  failureGetVacationDocument,
   // cancel document
   requestCancelDocument,
   successCancelDocument,
+  failureCancelDocumen,
 } = documentActions;
 
 /* get documents */
 function* callGetDocuments(action: ReturnType<typeof requestGetDocuments>) {
-  const page: Page<Documents> = yield call(
-    get,
-    '/api/document/search',
-    action.payload,
-    () => {},
-  );
+  try {
+    const page: Page<Documents> = yield call(
+      get,
+      '/api/document/search',
+      action.payload,
+      () => {},
+    );
 
-  yield put(successGetDocuments(page));
+    yield put(successGetDocuments(page));
+  } catch (err: any) {
+    yield put(failureGetDocuments());
+
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchGetDocuments() {
@@ -40,15 +54,23 @@ function* watchGetDocuments() {
 function* callAddVacation(action: ReturnType<typeof requestAddVacation>) {
   const { requestBody, handleAfter } = action.payload;
 
-  const response: Documents = yield call(
-    post,
-    '/api/document/vacation',
-    requestBody,
-  );
+  try {
+    const response: Documents = yield call(
+      post,
+      '/api/document/vacation',
+      requestBody,
+    );
 
-  yield put(successAddVacation(response));
+    yield put(successAddVacation(response));
 
-  handleAfter && handleAfter();
+    handleAfter && handleAfter();
+  } catch (err: any) {
+    yield put(failureAddVacation());
+
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchAddVacation() {
@@ -61,10 +83,20 @@ function* callGetVacationDocument(
 ) {
   const { documentId } = action.payload;
 
-  const vacation: { document: VacationDocument; lines: DocumentLineStatus[] } =
-    yield call(get, `/api/document/vacation/${documentId}`, null);
+  try {
+    const vacation: {
+      document: VacationDocument;
+      lines: DocumentLineStatus[];
+    } = yield call(get, `/api/document/vacation/${documentId}`, null);
 
-  yield put(successGetVacationDocument(vacation));
+    yield put(successGetVacationDocument(vacation));
+  } catch (err: any) {
+    yield put(failureGetVacationDocument());
+
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchGetVacationDocument() {
@@ -75,14 +107,22 @@ function* watchGetVacationDocument() {
 function* callCancelDocument(action: ReturnType<typeof requestCancelDocument>) {
   const { documentId, handleAfter } = action.payload;
 
-  const document: Documents = yield call(
-    deleteCall,
-    `/api/document/${documentId}/cancel`,
-  );
+  try {
+    const document: Documents = yield call(
+      deleteCall,
+      `/api/document/${documentId}/cancel`,
+    );
 
-  yield put(successCancelDocument(document));
+    yield put(successCancelDocument(document));
 
-  handleAfter && handleAfter();
+    handleAfter && handleAfter();
+  } catch (err: any) {
+    yield put(failureCancelDocumen());
+
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchCancelDocument() {
