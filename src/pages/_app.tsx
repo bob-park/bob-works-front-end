@@ -21,7 +21,9 @@ const { requestGetUser } = authenticationActions;
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const { isLoading, user } = useAppSelector((state) => state.authentication);
+  const { isLoading, isLoggedIn, user } = useAppSelector(
+    (state) => state.authentication,
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -30,15 +32,15 @@ function App({ Component, pageProps }: AppProps) {
         exceptionHandle: () => router.push('/login'),
       }),
     );
-  }, []);
+  }, [!user && !isLoggedIn]);
 
   const processLogout = () => {
     router.push('/api/logout');
   };
 
-  if (isLoading) {
-    return <LoginLoading />;
-  }
+  // if (isLoading) {
+  //   return <LoginLoading />;
+  // }
 
   return (
     <>

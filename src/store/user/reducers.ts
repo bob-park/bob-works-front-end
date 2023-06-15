@@ -5,6 +5,9 @@ const reducers = {
   successGetUserVacation: (state: UserState, action: PayloadAction<User>) => {
     state.user = action.payload;
   },
+  failureGetUserVacation: (state: UserState) => {
+    state.user = undefined;
+  },
   requestUpdatePassword: (
     state: UserState,
     action: PayloadAction<{ password: string; handleSuccess: () => void }>,

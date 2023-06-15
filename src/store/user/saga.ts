@@ -4,10 +4,13 @@ import { get, putCall, post } from '@/utils/common';
 
 import { userActions } from '.';
 
+import { authenticationActions } from '@/store/authentication';
+
 const {
   // get user vacation
   requestGetUserVacation,
   successGetUserVacation,
+  failureGetUserVacation,
   //update password
   requestUpdatePassword,
   successUpdatePassword,
@@ -19,13 +22,19 @@ const {
   successUpdateSignature,
 } = userActions;
 
+const { removeAuthentication } = authenticationActions;
+
 // get user vacation
 function* callGetUserVacation(
   action: ReturnType<typeof requestGetUserVacation>,
 ) {
-  const user: User = yield call(get, '/api/user/vacation', null, () => {});
-
-  yield put(successGetUserVacation(user));
+  try {
+    const user: User = yield call(get, '/api/user/vacation', null);
+    yield put(successGetUserVacation(user));
+  } catch (err) {
+    yield put(removeAuthentication());
+    yield put(failureGetUserVacation());
+  }
 }
 
 function* watchRequestGetUserVacation() {

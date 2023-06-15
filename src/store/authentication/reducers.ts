@@ -13,6 +13,12 @@ const reducers = {
     state.isLoggedIn = true;
     state.user = action.payload;
   },
+  // remove authentication
+  removeAuthentication: (state: AuthenticationState) => {
+    state.user = undefined;
+    state.isLoading = false;
+    state.isLoggedIn = false;
+  },
 };
 
 export default reducers;
