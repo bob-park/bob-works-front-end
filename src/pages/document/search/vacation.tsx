@@ -13,8 +13,13 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
 
 import { documentActions } from '@/store/document';
 import { VacationDocument } from '@/components/document';
+import { DocumentsStatus } from '@/store/document/types';
 
 const { requestGetVacationDocument, requestCancelDocument } = documentActions;
+
+function checkDisabledBtn(status: DocumentsStatus): boolean {
+  return status === 'CANCEL' || status === 'REJECT';
+}
 
 export default function VacationDocumentList() {
   // router
@@ -129,7 +134,7 @@ export default function VacationDocumentList() {
 
               <Button
                 onClick={handleCapture}
-                disabled={vacationDocument.status === 'CANCEL'}
+                disabled={checkDisabledBtn(vacationDocument.status)}
               >
                 <FiDownload className="mr-2 h-5 w-5" />
                 PDF 다운로드
@@ -138,7 +143,7 @@ export default function VacationDocumentList() {
               <Button
                 onClick={() => setShowConfirmCancel(true)}
                 color="failure"
-                disabled={vacationDocument.status === 'CANCEL'}
+                disabled={checkDisabledBtn(vacationDocument.status)}
               >
                 <MdOutlineCancel className="mr-2 h-5 w-5" />
                 취소

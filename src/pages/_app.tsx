@@ -12,7 +12,6 @@ import { wrapper } from '@/store/store';
 import { authenticationActions } from '@/store/authentication';
 import DefaultSideBar from '@/components/DefaultSideBar';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHook';
-import LoginLoading from '@/components/loading/LoginLoading';
 
 const { Copyright, LinkGroup, Link } = Footer;
 
@@ -37,10 +36,6 @@ function App({ Component, pageProps }: AppProps) {
   const processLogout = () => {
     router.push('/api/logout');
   };
-
-  // if (isLoading) {
-  //   return <LoginLoading />;
-  // }
 
   return (
     <>

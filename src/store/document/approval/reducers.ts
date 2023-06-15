@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { DocumentApproval, DocumentApprovalState } from './types';
-import { Page, Pageable } from '@/common/page';
+import { Page, Pageable, defaultPage } from '@/common/page';
 import { DocumentsStatus } from '../types';
 
 const reducers = {
@@ -17,6 +17,10 @@ const reducers = {
     state.isLoading = false;
     state.approvals = action.payload;
   },
+  failureGetApprovals: (state: DocumentApprovalState) => {
+    state.isLoading = false;
+    state.approvals = defaultPage;
+  },
   requestGetApproval: (
     state: DocumentApprovalState,
     action: PayloadAction<{ approvalId: number }>,
@@ -28,6 +32,9 @@ const reducers = {
     action: PayloadAction<DocumentApproval>,
   ) => {
     state.approval = action.payload;
+  },
+  failureGetApproval: (state: DocumentApprovalState) => {
+    state.approval = null;
   },
   // approve document
   requestApproveDocument: (
@@ -42,6 +49,9 @@ const reducers = {
     state.isLoading = true;
   },
   successApproveDocument: (state: DocumentApprovalState) => {
+    state.isLoading = false;
+  },
+  failureApproveDocument: (state: DocumentApprovalState) => {
     state.isLoading = false;
   },
 };
