@@ -50,14 +50,21 @@ function* watchGetApprovals() {
 /* get approval */
 function* callGetApproval(action: ReturnType<typeof requestGetApproval>) {
   const { approvalId } = action.payload;
+  try {
+    const approval: DocumentApproval = yield call(
+      get,
+      `/api/document/approval/${approvalId}`,
+      null,
+    );
 
-  const approval: DocumentApproval = yield call(
-    get,
-    `/api/document/approval/${approvalId}`,
-    null,
-  );
+    yield put(successGetApproval(approval));
+  } catch (err: any) {
+    yield put(failureGetApproval());
 
-  yield put(successGetApproval(approval));
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchGetApproval() {
@@ -69,11 +76,19 @@ function* callApproveDocument(
 ) {
   const { id, status, reason, handleAfter } = action.payload;
 
-  yield call(putCall, `/api/document/approval/${id}`, { status, reason });
+  try {
+    yield call(putCall, `/api/document/approval/${id}`, { status, reason });
 
-  yield put(successApproveDocument());
+    yield put(successApproveDocument());
 
-  handleAfter && handleAfter();
+    handleAfter && handleAfter();
+  } catch (err: any) {
+    yield put(failureApproveDocument());
+
+    if (err?.response?.status == 401) {
+      yield put(removeAuthentication());
+    }
+  }
 }
 
 function* watchRequestApproveDocument() {
